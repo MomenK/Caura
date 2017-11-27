@@ -6,9 +6,10 @@ import base64 from 'base-64';
 import buffer from 'buffer'; //Brower based! JS6
 
 import {
-  TabNavigator,
+  TabNavigator,NavigationActions
 } from 'react-navigation';
 
+import './global.js'
 
  class SensorsComponent extends Component {
    static navigationOptions = {
@@ -18,7 +19,7 @@ import {
   constructor() {
     super()
     this.manager = new BleManager()
-    this.state = {info: "Ready...", values: {},connection: false,deviceName:"Project Zero"}
+    this.state = {info: "Ready...", values: {},connection: false,tryingtoCon:false,deviceName:"Project Zero"}
     this.prefixUUID = "f00011"
     this.suffixUUID = "-0451-4000-b000-000000000000"
     this.sensors = { //This need to be changed to have each chemical in a different service
@@ -72,39 +73,48 @@ this.win = Dimensions.get('window');
  //    }
   //}
 
- scanAndConnect() {
-   this.manager.startDeviceScan(null,
-                                null, (error, device) => {
-     this.info("Scanning...")
-     console.log(device)
-
-     if (error) {
-       this.error(error.message)
-      return
-     }
-
-     if (device.name === this.state.deviceName ) {
-       this.info("Connecting device")
-       this.manager.stopDeviceScan()
-       device.connect()
-         .then((device) => {
-           this.setState({connection:true})
-           this.info("Discovering services and characteristics")
-           return device.discoverAllServicesAndCharacteristics()
-         })
-         .then((device) => {
-           this.info("Setting notifications")
-           return this.setupNotifications(device)
-         })
-         .then(() => {
-           this.info("Listening...")
-         }, (error) => {
+scanAndConnect() {
+   if(global.signedID){
+     this.manager.startDeviceScan(null,
+                                  null, (error, device) => {
+       this.info("Scanning...")
+       this.setState({tryingtoCon:true})
+       //console.log(device)
+         if (error) {
            this.error(error.message)
-         })
+           this.setState({tryingtoCon:false})
+          return
+         }
 
-     }
-   });
+         if (device.name === this.state.deviceName ) {
+           this.device = device
+           this.info("Connecting device")
+           this.manager.stopDeviceScan()
+           device.connect()
+             .then((device) => {
+               this.setState({tryingtoCon:false})
+               this.setState({connection:true})
+               this.info("Discovering services and characteristics")
+               return device.discoverAllServicesAndCharacteristics()
+             })
+             .then((device) => {
+               this.info("Setting notifications")
+               return this.setupNotifications(device)
+             })
+             .then(() => {
+               this.info("Listening...")
+             }, (error) => {
+               this.error(error.message)
+             })
+
+         }
+    });
  }
+ else {
+   this.info("Must Register ID first")
+ }
+ }
+
 
  async setupNotifications(device) {
   for (const id in this.sensors) {
@@ -129,13 +139,28 @@ this.win = Dimensions.get('window');
           device.onDisconnected((error,device)=>{
             if (error){
                 this.error(error.message)
-                this.info("Dicounted due to reasons no one knows!")
+                this.info("Disconnected..")
                 return
             }
             this.info("Disconnected..")
 
           })
     }
+  }
+
+stopScanAndDisconnect()
+  {
+    this.setState({tryingtoCon:false})
+    this.manager.stopDeviceScan()
+    if(this.device){
+    this.device.cancelConnection()}
+    this.info("Ready..")
+  }
+
+disconnect()
+  {
+    this.device.cancelConnection()
+    this.info("Ready..")
   }
 
  ParserCon(raw)
@@ -172,32 +197,44 @@ this.win = Dimensions.get('window');
             return <View key={key}>
                     <Text style={styles.title} key={"t"+key}>
                      {this.sensors[key] + ": " } </Text>
-                    <Text style={styles.value} key={"v"+key}> {this.state.values[this.notifyUUID(2,key)]}</Text>
+                    <Text style={styles.value} key={"v"+key}> {(this.state.values[this.notifyUUID(2,key)] || "0")+" mM"}</Text>
                     </View>
           })}
 
-
+          <View style={{marginTop:70}}>
           {this.state.connection ? (
-            <TouchableWithoutFeedback >
-                <View style={styles.buttonGreen}>
-                <Text style={styles.buttonText}>Connected</Text></View>
-         </TouchableWithoutFeedback>
+         //    <TouchableWithoutFeedback >
+         //        <View style={styles.buttonGreen}>
+         //        <Text style={styles.buttonText}>Connected</Text></View>
+         // </TouchableWithoutFeedback>
+         <Button color = '#32cd32'
+           title= "Disconnect"
+           onPress={this.disconnect.bind(this)}
+         />
           ):(
-             <TouchableHighlight  onPress={this.scanAndConnect.bind(this)} underlayColor="#F5FCFF">
-                 <View style={styles.button}>
-                 <Text style={styles.buttonText}>Press to Connect</Text></View>
-          </TouchableHighlight>
-        )}
-
+          //    <TouchableHighlight  onPress={this.scanAndConnect.bind(this)} underlayColor="#F5FCFF">
+          //        <View style={styles.button}>
+          //        <Text style={styles.buttonText}>Press to Connect</Text></View>
+          // </TouchableHighlight>
+          <Button style={styles.button}
+            title= "Connect"
+            onPress={this.scanAndConnect.bind(this)}
+          />
+        )
+        }
       <Text> {"Status: "} <Text>{this.state.info}</Text> </Text>
 
+      {this.state.tryingtoCon && <Button color = 'red'
+        title= "Cancel"
+          onPress={this.stopScanAndDisconnect.bind(this)}
+      />}
+      </View>
+
         </View>
-
-</View>
+        </View>
       )
-    }
   }
-
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -209,7 +246,7 @@ const styles = StyleSheet.create({
   button: {
     marginTop:30,
     marginBottom: 15,
-    width: 260,
+  //  width: 260,
     alignSelf: 'center',
     alignItems: 'center',
     backgroundColor: '#2196F3',
@@ -218,7 +255,7 @@ const styles = StyleSheet.create({
   buttonGreen: {
     marginTop:30,
     marginBottom: 15,
-    width: 260,
+  //  width: 260,
     alignSelf: 'center',
     alignItems: 'center',
     backgroundColor: '#32cd3288'
@@ -278,8 +315,10 @@ class HomeScreen extends Component {
         />
         <Button
           title="Register"
-          onPress={() =>
+          onPress={() =>{
+            global.signedID = true
             navigate('Sensors')
+          }
           }
         />
         </View>
@@ -289,12 +328,12 @@ class HomeScreen extends Component {
 }
 
 
-
 const AwesomeProject = TabNavigator({
   Home: { screen: HomeScreen },
   Sensors: { screen: SensorsComponent },
 },{
   tabBarPosition: 'bottom',
+  swipeEnabled: false,
   animationEnabled: true,
   tabBarOptions: {
     activeTintColor: 'white',
@@ -304,6 +343,17 @@ const AwesomeProject = TabNavigator({
     }
   },
 });
+
+const defaultGetStateForAction = AwesomeProject.router.getStateForAction;
+
+AwesomeProject.router.getStateForAction = (action, state) => {
+  if ((!global.signedID) && (action.type === NavigationActions.NAVIGATE) &&
+     (action.routeName === "Sensors")) {
+    return null;
+  }
+
+  return defaultGetStateForAction(action, state);
+};
 
 export default class App extends React.Component {
   render() {
