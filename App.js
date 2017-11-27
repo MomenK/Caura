@@ -1,15 +1,19 @@
 import React, { Component } from 'react';
-import { Alert,Platform, View, Text,TouchableHighlight,TouchableWithoutFeedback, StyleSheet,Image,Dimensions } from 'react-native';
+import { Button,Alert,Platform, View, Text,TextInput,TouchableHighlight,TouchableWithoutFeedback, StyleSheet,Image,Dimensions } from 'react-native';
 import { BleManager } from 'react-native-ble-plx';
 //import Orientation from 'react-native-orientation';
 import base64 from 'base-64';
 import buffer from 'buffer'; //Brower based! JS6
 
+import {
+  TabNavigator,
+} from 'react-navigation';
 
 
-
-export default class SensorsComponent extends Component {
-
+ class SensorsComponent extends Component {
+   static navigationOptions = {
+     title: 'You Today',
+   };
 
   constructor() {
     super()
@@ -57,7 +61,7 @@ this.win = Dimensions.get('window');
 
   //componentWillMount() {
 
-                     //Allows auto detection of Device with no need to press button to connect
+                     ////Allows auto detection of Device with no need to press button to connect
  //   if (Platform.OS === 'ios') {
  //     this.manager.onStateChange((state) => {
  //       if (state === 'PoweredOn') this.scanAndConnect()
@@ -67,8 +71,6 @@ this.win = Dimensions.get('window');
  //      this.scanAndConnect()
  //    }
   //}
-
-
 
  scanAndConnect() {
    this.manager.startDeviceScan(null,
@@ -155,6 +157,7 @@ this.win = Dimensions.get('window');
   }
 
   render() {
+    const { navigate } = this.props.navigation;
       return (
   <View style={{flex: 1, flexDirection: 'column'}}>
         <View style={styles.canvasContainer}>
@@ -171,11 +174,7 @@ this.win = Dimensions.get('window');
                      {this.sensors[key] + ": " } </Text>
                     <Text style={styles.value} key={"v"+key}> {this.state.values[this.notifyUUID(2,key)]}</Text>
                     </View>
-
-
           })}
-
-
 
 
           {this.state.connection ? (
@@ -184,20 +183,20 @@ this.win = Dimensions.get('window');
                 <Text style={styles.buttonText}>Connected</Text></View>
          </TouchableWithoutFeedback>
           ):(
-             <TouchableHighlight  onPress={this.scanAndConnect.bind(this)} underlayColor="white">
+             <TouchableHighlight  onPress={this.scanAndConnect.bind(this)} underlayColor="#F5FCFF">
                  <View style={styles.button}>
                  <Text style={styles.buttonText}>Press to Connect</Text></View>
           </TouchableHighlight>
         )}
 
       <Text> {"Status: "} <Text>{this.state.info}</Text> </Text>
+
         </View>
+
 </View>
       )
     }
   }
-
-
 
 
 const styles = StyleSheet.create({
@@ -261,3 +260,53 @@ const styles = StyleSheet.create({
    textAlign:'left'
  },
 })
+
+
+class HomeScreen extends Component {
+  static navigationOptions = {
+    title: 'Welcome',
+  };
+  render() {
+    const { navigate } = this.props.navigation;
+    return (
+      <View style={styles.container}>
+      <Text>Welcome</Text>
+      <TextInput
+          style={{height: 40}}
+          placeholder="Enter your KEYA unique ID"
+          onChangeText={(text) => this.setState({text})}
+        />
+        <Button
+          title="Register"
+          onPress={() =>
+            navigate('Sensors')
+          }
+        />
+        </View>
+
+    );
+  }
+}
+
+
+
+const AwesomeProject = TabNavigator({
+  Home: { screen: HomeScreen },
+  Sensors: { screen: SensorsComponent },
+},{
+  tabBarPosition: 'bottom',
+  animationEnabled: true,
+  tabBarOptions: {
+    activeTintColor: 'white',
+    indicatorStyle:{
+       backgroundColor:'red',
+
+    }
+  },
+});
+
+export default class App extends React.Component {
+  render() {
+    return <AwesomeProject/>;
+  }
+}
