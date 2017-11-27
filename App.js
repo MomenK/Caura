@@ -10,6 +10,7 @@ import {
 } from 'react-navigation';
 
 import './global.js'
+import {HomeScreen } from './Home.js'
 
  class SensorsComponent extends Component {
    static navigationOptions = {
@@ -19,7 +20,7 @@ import './global.js'
   constructor() {
     super()
     this.manager = new BleManager()
-    this.state = {info: "Ready...", values: {},connection: false,tryingtoCon:false,deviceName:"Project Zero"}
+    this.state = {info: "Ready...", values: {},connection: false,tryingtoCon:false}
     this.prefixUUID = "f00011"
     this.suffixUUID = "-0451-4000-b000-000000000000"
     this.sensors = { //This need to be changed to have each chemical in a different service
@@ -86,7 +87,7 @@ scanAndConnect() {
           return
          }
 
-         if (device.name === this.state.deviceName ) {
+         if (device.name === global.deviceName ) {
            this.device = device
            this.info("Connecting device")
            this.manager.stopDeviceScan()
@@ -299,33 +300,6 @@ const styles = StyleSheet.create({
 })
 
 
-class HomeScreen extends Component {
-  static navigationOptions = {
-    title: 'Welcome',
-  };
-  render() {
-    const { navigate } = this.props.navigation;
-    return (
-      <View style={styles.container}>
-      <Text>Welcome</Text>
-      <TextInput
-          style={{height: 40}}
-          placeholder="Enter your KEYA unique ID"
-          onChangeText={(text) => this.setState({text})}
-        />
-        <Button
-          title="Register"
-          onPress={() =>{
-            global.signedID = true
-            navigate('Sensors')
-          }
-          }
-        />
-        </View>
-
-    );
-  }
-}
 
 
 const AwesomeProject = TabNavigator({
