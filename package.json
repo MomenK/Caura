@@ -12,8 +12,10 @@
     "react-native-ble-manager": "^6.2.4",
     "react-native-ble-plx": "^0.6.5",
     "react-native-orientation": "^3.1.0",
+    "react-native-svg": "^6.0.0",
     "react-navigation": "^1.0.0-beta.21",
-    "utf8": "^2.1.2"
+    "utf8": "^2.1.2",
+    "victory-native": "^0.16.1"
   },
   "devDependencies": {
     "babel-jest": "21.2.0",

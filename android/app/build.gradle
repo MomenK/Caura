@@ -137,6 +137,9 @@ android {
 }
 
 dependencies {
+compile(project(':react-native-svg')) {
+exclude group: 'com.android.support', module: 'appcompat-v7'
+}
     compile project(':react-native-orientation')
     compile project(':react-native-ble-plx')
     compile project(':react-native-ble-manager')

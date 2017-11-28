@@ -8,13 +8,16 @@ import {
 import './global.js'
 import {HomeScreen } from './Home.js'
 import {SensorsComponent} from './Sensors.js'
+import {ChartScreen} from './Chart.js'
 
 
 
 const TabNavi = TabNavigator({
   Home: { screen: HomeScreen },
   Sensors: { screen: SensorsComponent },
+  Chart: {screen: ChartScreen},
 },{
+  initialRouteName : 'Home',
   tabBarPosition: 'bottom',
   swipeEnabled: false,
   animationEnabled: true,
