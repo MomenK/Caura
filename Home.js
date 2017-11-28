@@ -15,13 +15,15 @@ export class HomeScreen extends Component {
   }
   validate(text)
   {
-    if (text.length == 12)
+    if (/^[A-Z]{3}-[0-9]{2}$/.test(text))
     {
-    global.deviceName = text
+  //  global.deviceName = text
+    global.deviceName = "Project Zero" //TODO: This Override must be removed later
+
     global.signedID = true
    }
    else {
-     Alert.alert("Not a valid ID")
+     Alert.alert("Not a valid ID!")
    }
 
   }
@@ -30,10 +32,12 @@ export class HomeScreen extends Component {
     const { navigate } = this.props.navigation;
     return (
       <View style={styles.container}>
-      <Text>Welcome</Text>
+      <Text>Welcome, enter your unique KEYA ID</Text>
       <TextInput
           style={{height: 40}}
-          placeholder="Enter your KEYA unique ID"
+          placeholder="example: ABC-12"
+          maxLength = {6}
+          autoCapitalize = 'characters'
           onChangeText={(text) =>{
             this.setState({name:text})
             global.signedID = false
