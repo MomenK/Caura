@@ -1,2 +1,2 @@
 # KEYA
-CortiCare React Native Mobile App
+CortiCare Limited React-Native Mobile Application 
