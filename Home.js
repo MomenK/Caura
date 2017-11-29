@@ -4,9 +4,7 @@ import { Button,Alert,Platform, View, Text,TextInput,TouchableHighlight,Touchabl
 import './global.js'
 
 export class HomeScreen extends Component {
-  static navigationOptions = {
-    title: 'Welcome',
-  };
+
 
   constructor ()
   {

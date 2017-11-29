@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import FontAwesome, { Icons } from "react-native-fontawesome";
 
 
 import {
@@ -13,16 +14,31 @@ import {ChartScreen} from './Chart.js'
 
 
 const TabNavi = TabNavigator({
-  Home: { screen: HomeScreen },
-  Sensors: { screen: SensorsComponent },
-  Chart: {screen: ChartScreen},
+  Home: { screen: HomeScreen,
+    navigationOptions: ({ navigation }) => ({
+  				title: "Home",
+  				tabBarIcon: ({ tintColor }) => <FontAwesome style={{fontSize: 28, color:tintColor}}>{Icons.home}</FontAwesome>
+  			}) },
+  Sensors: { screen: SensorsComponent,
+    navigationOptions: ({ navigation }) => ({
+  				title: "Sync",
+  				tabBarIcon: ({ tintColor }) => <FontAwesome style={{fontSize: 28, color:tintColor}}>{Icons.refresh}</FontAwesome>
+  			}) },
+  Chart: {screen: ChartScreen,
+    navigationOptions: ({ navigation }) => ({
+  				title: "Record",
+  				tabBarIcon: ({ tintColor }) => <FontAwesome style={{fontSize: 28, color:tintColor}}>{Icons.areaChart}</FontAwesome>
+  			}) },
 },{
   initialRouteName : 'Home',
   tabBarPosition: 'bottom',
   swipeEnabled: false,
   animationEnabled: true,
   tabBarOptions: {
-    activeTintColor: 'white',
+    showIcon:true,
+    showLabel:false,
+    activeTintColor:  '#141823',
+    inactiveTintColor: '#141823',
     indicatorStyle:{
        backgroundColor:'red',
 
