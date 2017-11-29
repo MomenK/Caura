@@ -16,7 +16,7 @@ export class ChartScreen extends Component {
        this.setStateInterval = window.setInterval(() => {
          console.log(Math.random(1,10))
          this.setState({ data: this.getData() });
-       }, 4000);
+       }, 10000);
      }
 
      componentWillUnmount() {
@@ -38,10 +38,7 @@ export class ChartScreen extends Component {
 
    render() {
      return (
-       <VictoryChart
-         theme={VictoryTheme.material}
-         animate={{ duration: 2000 }}
-       >
+       <VictoryChart  theme={VictoryTheme.material} animate={{ duration: 2000 }} height={250}>
          <VictoryStack
            colorScale={"blue"}
          >

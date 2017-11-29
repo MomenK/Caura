@@ -38,11 +38,19 @@ const TabNavi = TabNavigator({
     showIcon:true,
     showLabel:false,
     activeTintColor:  '#141823',
-    inactiveTintColor: '#141823',
+    inactiveTintColor: ' #141823',
     indicatorStyle:{
-       backgroundColor:'red',
+       backgroundColor:'aliceblue',
+    //   width:20,
+       height:3,
+      // alignSelf:'center'
+    },
+    style: {
+     backgroundColor: 'rgba(33, 150, 243, 1)',
+     borderTopWidth: 0,
+     borderTopColor: 'midnightblue',
 
-    }
+   }
   },
 });
 
