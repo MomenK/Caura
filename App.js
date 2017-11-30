@@ -17,17 +17,17 @@ const TabNavi = TabNavigator({
   Home: { screen: HomeScreen,
     navigationOptions: ({ navigation }) => ({
   				title: "Home",
-  				tabBarIcon: ({ tintColor }) => <FontAwesome style={{fontSize: 28, color:tintColor}}>{Icons.home}</FontAwesome>
+  				tabBarIcon: ({ tintColor }) => <FontAwesome style={{fontSize: 28}}>{Icons.home}</FontAwesome>
   			}) },
   Sensors: { screen: SensorsComponent,
     navigationOptions: ({ navigation }) => ({
   				title: "Sync",
-  				tabBarIcon: ({ tintColor }) => <FontAwesome style={{fontSize: 28, color:tintColor}}>{Icons.refresh}</FontAwesome>
+  				tabBarIcon: ({ tintColor }) => <FontAwesome style={{fontSize: 28}}>{Icons.refresh}</FontAwesome>
   			}) },
   Chart: {screen: ChartScreen,
     navigationOptions: ({ navigation }) => ({
   				title: "Record",
-  				tabBarIcon: ({ tintColor }) => <FontAwesome style={{fontSize: 28, color:tintColor}}>{Icons.areaChart}</FontAwesome>
+  				tabBarIcon: ({ tintColor }) => <FontAwesome style={{fontSize: 28}}>{Icons.areaChart}</FontAwesome>
   			}) },
 },{
   initialRouteName : 'Home',
@@ -38,7 +38,7 @@ const TabNavi = TabNavigator({
     showIcon:true,
     showLabel:false,
     activeTintColor:  '#141823',
-    inactiveTintColor: ' #141823',
+    inactiveTintColor: 'red',
     indicatorStyle:{
        backgroundColor:'aliceblue',
     //   width:20,

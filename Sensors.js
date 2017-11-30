@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button,Alert,Platform, View, Text,TextInput,TouchableHighlight,TouchableWithoutFeedback, StyleSheet,Image,Dimensions } from 'react-native';
+import { AsyncStorage,Button,Alert,Platform, View, Text,TextInput,TouchableHighlight,TouchableWithoutFeedback, StyleSheet,Image,Dimensions } from 'react-native';
 import { BleManager } from 'react-native-ble-plx';
 //import Orientation from 'react-native-orientation';
 import base64 from 'base-64';
@@ -68,6 +68,23 @@ this.win = Dimensions.get('window');
  //      this.scanAndConnect()
  //    }
   //}
+
+  componentDidMount(){
+
+    AsyncStorage.setItem('@MySuperStore:key', 'I like to save it.',()=>{
+      console.log('saved')
+      AsyncStorage.getItem('@MySuperStore:key',(err, res)=>{
+        console.log(res)
+       AsyncStorage.removeItem('@MySuperStore:key',()=>{
+         console.log('deleted')
+         AsyncStorage.getItem('@MySuperStore:key',(err,res)=> {console.log(res)
+         });
+     });
+    });
+  });
+
+
+  }
 
 scanAndConnect() {
    if(global.signedID){
@@ -266,7 +283,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
     position: 'relative'
- },
+   },
  canvas: {
   // position: 'absolute',
      alignSelf: 'center',
