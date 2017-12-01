@@ -1,6 +1,12 @@
 # KEYA
 CortiCare Limited React-Native Mobile Application 
 
+
+<p align="center">
+  <img alt="react-native KEYA" src="img/Logo_alpha.png" />
+</p>
+
+
 ## Environment
   - react-native-cli: 2.0.1
   - react-native: 0.50.3
