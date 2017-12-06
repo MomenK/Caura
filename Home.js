@@ -21,7 +21,7 @@ export class HomeScreen extends Component {
     if(!this.state.connection){
 
 
-        this.ws = new WebSocket("ws://demos.kaazing.com/echo");
+        this.ws = new WebSocket("ws://desolate-ravine-94118.herokuapp.com/"); //Both IP and port
 
         this.ws.onopen = () => {
           // connection opened
