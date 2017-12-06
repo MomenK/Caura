@@ -77,10 +77,11 @@ this.win = Dimensions.get('window');
         console.log(res)
        AsyncStorage.removeItem('@MySuperStore:key',()=>{
          console.log('deleted')
-         AsyncStorage.getItem('@MySuperStore:key',(err,res)=> {console.log(res)
+         AsyncStorage.getItem('@MySuperStore:key',(err,res)=> {
+           console.log(res)
          });
+       });
      });
-    });
   });
 
 

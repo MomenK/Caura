@@ -9,7 +9,50 @@ export class HomeScreen extends Component {
   constructor ()
   {
     super()
-    this.state = {name:""}
+
+    this.state = {name:"",connection:false}
+    this.connectThenSend = this.connectThenSend.bind(this)
+
+  }
+
+  connectThenSend(msg)
+  {
+
+    if(!this.state.connection){
+
+
+        this.ws = new WebSocket("ws://demos.kaazing.com/echo");
+
+        this.ws.onopen = () => {
+          // connection opened
+          this.setState({connection:true})
+          this.ws.send(msg); // send a message
+        };
+
+        this.ws.onmessage = e => {
+          // a message was received
+          console.log(e.data);
+           Alert.alert("Response:"+ e.data)
+        };
+
+        this.ws.onerror = e => {
+          // an error occurred
+          if (/No/.test(e.message))
+          {
+             Alert.alert("No Intenet connection")
+          }
+          console.log(e.message);
+
+        };
+
+        this.ws.onclose = e => {
+          // connection closed
+         this.setState({connection:false})
+          console.log(e.code, e.reason);
+        };
+    }
+    if (this.state.connection) {this.ws.send(msg)}
+
   }
   validate(text)
   {
@@ -49,6 +92,20 @@ export class HomeScreen extends Component {
             }
           }
         />
+        {this.state.connection &&
+        <Button
+          title="Test: connected"
+          onPress={this.connect}
+        />
+       }
+        <Button
+          title="Test: SendSocket"
+          onPress={() =>{
+            this.connectThenSend(this.state.name)
+          }
+          }
+        />
+
         </View>
 
     );
