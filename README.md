@@ -20,4 +20,8 @@ CortiCare Limited React-Native Mobile Application
   - [react-native-svg](https://github.com/react-native-community/react-native-svg)
   - [react-navigation](https://reactnavigation.org/docs/intro/quick-start)
   - [react-native-fontawesome](https://github.com/entria/react-native-fontawesome)
+  - [styled-components](https://www.styled-components.com/docs/basics#react-native)
+  - [react-native-chatbot](https://www.npmjs.com/package/react-native-chatbot)
+    - comment 290 in react-native-chatbot/ChatBot.js needs
+    - change InputView from styled.KeyboardAvoidingView to styled.View
   
