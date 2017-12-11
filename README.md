@@ -13,7 +13,7 @@ CortiCare Limited React-Native Mobile Application
   - npm: 5.6.0
  
 
-### Dependancies
+### Resources
   - [react-native-ble-plx](https://github.com/Polidea/react-native-ble-plx)
   - [base-64](https://www.npmjs.com/package/base-64)
   - [victory-native](https://github.com/FormidableLabs/victory-native)
