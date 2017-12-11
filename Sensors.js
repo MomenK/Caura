@@ -72,13 +72,13 @@ this.win = Dimensions.get('window');
   componentDidMount(){
 
     AsyncStorage.setItem('@MySuperStore:key', 'I like to save it.',()=>{
-      console.log('saved')
+    //  console.log('saved')
       AsyncStorage.getItem('@MySuperStore:key',(err, res)=>{
-        console.log(res)
+      //  console.log(res)
        AsyncStorage.removeItem('@MySuperStore:key',()=>{
-         console.log('deleted')
+    //     console.log('deleted')
          AsyncStorage.getItem('@MySuperStore:key',(err,res)=> {
-           console.log(res)
+  //         console.log(res)
          });
        });
      });
@@ -89,10 +89,10 @@ this.win = Dimensions.get('window');
 
 scanAndConnect() {
    if(global.signedID){
+     this.setState({tryingtoCon:true})
+     this.info("Scanning...")
      this.manager.startDeviceScan(null,
-                                  null, (error, device) => {
-       this.info("Scanning...")
-       this.setState({tryingtoCon:true})
+                                  null, (error, device) => {       
        //console.log(device)
          if (error) {
            this.error(error.message)
@@ -164,7 +164,7 @@ scanAndConnect() {
 
 stopScanAndDisconnect()
   {
-      this.info("Canceling...")
+    this.info("Canceling...")
     this.setState({tryingtoCon:false})
     this.manager.stopDeviceScan()
     if(this.device){
@@ -191,8 +191,8 @@ disconnect()
     m += (str.charCodeAt(i) & 0xF ).toString(16);
     }
     num = parseInt(m,16);
-    console.log(m);
-    console.log(num);
+  //  console.log(m);
+  //  console.log(num);
   return  (num);
   }
 

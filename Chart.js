@@ -14,7 +14,7 @@ export class ChartScreen extends Component {
 
    componentDidMount() {
        this.setStateInterval = window.setInterval(() => {
-         console.log(Math.random(1,10))
+      //   console.log(Math.random(1,10))
          this.setState({ data: this.getData() });
        }, 10000);
      }
