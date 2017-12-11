@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { AsyncStorage,Button,Alert,Platform, View, Text,TextInput,TouchableHighlight,TouchableWithoutFeedback, StyleSheet,Image,Dimensions } from 'react-native';
 import { BleManager } from 'react-native-ble-plx';
+import { Bubbles, DoubleBounce, Bars, Pulse } from 'react-native-loader';
 //import Orientation from 'react-native-orientation';
 import base64 from 'base-64';
 
@@ -92,7 +93,7 @@ scanAndConnect() {
      this.setState({tryingtoCon:true})
      this.info("Scanning...")
      this.manager.startDeviceScan(null,
-                                  null, (error, device) => {       
+                                  null, (error, device) => {
        //console.log(device)
          if (error) {
            this.error(error.message)
@@ -164,7 +165,7 @@ scanAndConnect() {
 
 stopScanAndDisconnect()
   {
-    this.info("Canceling...")
+    this.info("Aborting...")
     this.setState({tryingtoCon:false})
     this.manager.stopDeviceScan()
     if(this.device){
@@ -198,6 +199,28 @@ disconnect()
 
   render() {
     const { navigate } = this.props.navigation;
+    if(this.state.connection){
+      button = <Button color = '#32cd32'
+        title= "Disconnect"
+        onPress={this.disconnect.bind(this)}
+      />
+    }
+    else{
+       if(this.state.tryingtoCon){
+         button = <Button color = 'red'
+           title= "Cancel"
+             onPress={this.stopScanAndDisconnect.bind(this)}
+         />
+       }
+       else{
+       button=  <Button style={styles.button}
+       title= "Connect"
+       onPress={this.scanAndConnect.bind(this)}
+       />
+     }
+    }
+
+
       return (
   <View style={{flex: 1, flexDirection: 'column'}}>
         <View style={styles.canvasContainer}>
@@ -217,36 +240,16 @@ disconnect()
           })}
 
           <View style={{marginTop:70}}>
-          {this.state.connection ? (
-         //    <TouchableWithoutFeedback >
-         //        <View style={styles.buttonGreen}>
-         //        <Text style={styles.buttonText}>Connected</Text></View>
-         // </TouchableWithoutFeedback>
-         <Button color = '#32cd32'
-           title= "Disconnect"
-           onPress={this.disconnect.bind(this)}
-         />
-          ):(
-          //    <TouchableHighlight  onPress={this.scanAndConnect.bind(this)} underlayColor="#F5FCFF">
-          //        <View style={styles.button}>
-          //        <Text style={styles.buttonText}>Press to Connect</Text></View>
-          // </TouchableHighlight>
 
-          <Button style={styles.button}
-            title= "Connect"
-            onPress={
+          {button}
 
-              this.scanAndConnect.bind(this)
-            }
-          />
-        )
-        }
+
+
+        <View style={{alignItems:'center'}}>
       <Text> {"Status: "} <Text>{this.state.info}</Text> </Text>
-
-      {this.state.tryingtoCon && <Button color = 'red'
-        title= "Cancel"
-          onPress={this.stopScanAndDisconnect.bind(this)}
-      />}
+      {this.state.tryingtoCon && <Bars size={10} color="blue" style={{alignSelf: 'center'}} /> }
+      {this.state.connection && <Pulse  size={10} color="blue" style={{alignSelf: 'center'}} /> }
+      </View>
       </View>
 
         </View>

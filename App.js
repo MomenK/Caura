@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import FontAwesome, { Icons } from "react-native-fontawesome";
 
-
 import {
   TabNavigator,NavigationActions
 } from 'react-navigation';

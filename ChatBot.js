@@ -1,5 +1,6 @@
 
 import React, { Component } from "react";
+import {Alert} from 'react-native'
 import ChatBot from 'react-native-chatbot';
 
 
@@ -25,7 +26,6 @@ export class ChatBotScreen extends Component {
             message: 'Hi {previousValue}, nice to meet you!',
             trigger: '4',
           },
-
           {
             id: '4',
             message: 'Are you good with instructions?',
@@ -46,8 +46,10 @@ export class ChatBotScreen extends Component {
           },
           {
             id: 'correct',
-            message: 'Awesome! You are a good boy!',
-            trigger:'1'
+            message : (value) => {Alert.alert("You mama!")
+            return 'Awesome! You are a good boy'},
+            trigger: ()=> {Alert.alert("You dada!")
+              return '1'},
           },
         ]}
       />
