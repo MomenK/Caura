@@ -13,7 +13,7 @@ CortiCare Limited React-Native Mobile Application
   - npm: 5.6.0
  
 
-## Dependancies
+### Dependancies
   - [react-native-ble-plx](https://github.com/Polidea/react-native-ble-plx)
   - [base-64](https://www.npmjs.com/package/base-64)
   - [victory-native](https://github.com/FormidableLabs/victory-native)
@@ -24,4 +24,23 @@ CortiCare Limited React-Native Mobile Application
   - [react-native-chatbot](https://www.npmjs.com/package/react-native-chatbot)
     - Comment 290 in react-native-chatbot/ChatBot.js needs
     - Change InputView from styled.KeyboardAvoidingView to styled.View
+    
+    
+### Dependencies Installation
+```Bash
+npm install
+```
+
+### Running the app for Android
+```Bash
+react-native run-android
+```
+
+### Running the app for iOS
+```Bash
+react-native run-ios
+```
+
+
+
   
