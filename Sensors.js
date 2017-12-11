@@ -164,6 +164,7 @@ scanAndConnect() {
 
 stopScanAndDisconnect()
   {
+      this.info("Canceling...")
     this.setState({tryingtoCon:false})
     this.manager.stopDeviceScan()
     if(this.device){
@@ -230,9 +231,13 @@ disconnect()
           //        <View style={styles.button}>
           //        <Text style={styles.buttonText}>Press to Connect</Text></View>
           // </TouchableHighlight>
+
           <Button style={styles.button}
             title= "Connect"
-            onPress={this.scanAndConnect.bind(this)}
+            onPress={
+
+              this.scanAndConnect.bind(this)
+            }
           />
         )
         }

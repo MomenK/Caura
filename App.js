@@ -10,6 +10,7 @@ import './global.js'
 import {HomeScreen } from './Home.js'
 import {SensorsComponent} from './Sensors.js'
 import {ChartScreen} from './Chart.js'
+import {ChatBotScreen} from './ChatBot.js'
 
 
 
@@ -29,11 +30,17 @@ const TabNavi = TabNavigator({
   				title: "Record",
   				tabBarIcon: ({ tintColor }) => <FontAwesome style={{fontSize: 28}}>{Icons.areaChart}</FontAwesome>
   			}) },
+  ChatBot: { screen: ChatBotScreen,
+    navigationOptions: ({ navigation }) => ({
+  				title: "Bar",
+  				tabBarIcon: ({ tintColor }) => <FontAwesome style={{fontSize: 28}}>{Icons.bars}</FontAwesome>
+  			}) },
 },{
   initialRouteName : 'Home',
   tabBarPosition: 'bottom',
   swipeEnabled: false,
   animationEnabled: true,
+  lazy:true,
   tabBarOptions: {
     showIcon:true,
     showLabel:false,

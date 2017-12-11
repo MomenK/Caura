@@ -7,14 +7,17 @@
     "test": "jest"
   },
   "dependencies": {
+    "base-64": "^0.1.0",
     "react": "16.0.0",
     "react-native": "0.50.3",
     "react-native-ble-manager": "^6.2.4",
     "react-native-ble-plx": "^0.6.5",
+    "react-native-chatbot": "0.0.1-alpha.7",
     "react-native-fontawesome": "^5.7.0",
     "react-native-orientation": "^3.1.0",
     "react-native-svg": "^6.0.0",
     "react-navigation": "^1.0.0-beta.21",
+    "styled-components": "^2.2.4",
     "utf8": "^2.1.2",
     "victory-native": "^0.16.1"
   },
