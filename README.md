@@ -10,7 +10,7 @@ CortiCare Limited React-Native Mobile Application
 ## Environment
   - react-native-cli: 2.0.1
   - react-native: 0.50.3
-  - npm: 4.6.1
+  - npm: 5.6.0
  
 
 ## Dependancies
@@ -22,6 +22,6 @@ CortiCare Limited React-Native Mobile Application
   - [react-native-fontawesome](https://github.com/entria/react-native-fontawesome)
   - [styled-components](https://www.styled-components.com/docs/basics#react-native)
   - [react-native-chatbot](https://www.npmjs.com/package/react-native-chatbot)
-    - comment 290 in react-native-chatbot/ChatBot.js needs
-    - change InputView from styled.KeyboardAvoidingView to styled.View
+    - Comment 290 in react-native-chatbot/ChatBot.js needs
+    - Change InputView from styled.KeyboardAvoidingView to styled.View
   
