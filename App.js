@@ -10,6 +10,7 @@ import {HomeScreen } from './Home.js'
 import {SensorsComponent} from './Sensors.js'
 import {ChartScreen} from './Chart.js'
 import {ChatBotScreen} from './ChatBot.js'
+import {ExtraScreen} from './Extra.js'
 
 
 
@@ -17,22 +18,27 @@ const TabNavi = TabNavigator({
   Home: { screen: HomeScreen,
     navigationOptions: ({ navigation }) => ({
   				title: "Home",
-  				tabBarIcon: ({ tintColor }) => <FontAwesome style={{fontSize: 28}}>{Icons.home}</FontAwesome>
+  				tabBarIcon: ({ tintColor }) => <FontAwesome style={{fontSize: 15,color:'#fff'}}>{Icons.home}</FontAwesome>
   			}) },
   Sensors: { screen: SensorsComponent,
     navigationOptions: ({ navigation }) => ({
   				title: "Sync",
-  				tabBarIcon: ({ tintColor }) => <FontAwesome style={{fontSize: 28}}>{Icons.refresh}</FontAwesome>
+  				tabBarIcon: ({ tintColor }) => <FontAwesome style={{fontSize: 15, color:'#fff'}}>{Icons.refresh}</FontAwesome>
   			}) },
   Chart: {screen: ChartScreen,
     navigationOptions: ({ navigation }) => ({
   				title: "Record",
-  				tabBarIcon: ({ tintColor }) => <FontAwesome style={{fontSize: 28}}>{Icons.areaChart}</FontAwesome>
+  				tabBarIcon: ({ tintColor }) => <FontAwesome style={{fontSize: 15, color:'#fff'}}>{Icons.areaChart}</FontAwesome>
   			}) },
   ChatBot: { screen: ChatBotScreen,
     navigationOptions: ({ navigation }) => ({
   				title: "Bar",
-  				tabBarIcon: ({ tintColor }) => <FontAwesome style={{fontSize: 28}}>{Icons.bars}</FontAwesome>
+  				tabBarIcon: ({ tintColor }) => <FontAwesome style={{fontSize: 15,color:tintColor}}>{Icons.bars}</FontAwesome>
+  			}) },
+  Extra: { screen: ExtraScreen,
+    navigationOptions: ({ navigation }) => ({
+  				title: "Ext",
+  				tabBarIcon: ({ tintColor }) => <FontAwesome style={{fontSize: 15, color:'#fff'}}>{Icons.refresh}</FontAwesome>
   			}) },
 },{
   initialRouteName : 'Home',
@@ -41,20 +47,33 @@ const TabNavi = TabNavigator({
   animationEnabled: true,
   lazy:true,
   tabBarOptions: {
+
     showIcon:true,
-    showLabel:false,
-    activeTintColor:  '#141823',
-    inactiveTintColor: 'red',
+    showLabel:true,
+    activeTintColor:  '#fff',
+
     indicatorStyle:{
-       backgroundColor:'aliceblue',
+       backgroundColor:'#36D16D',
     //   width:20,
-       height:3,
+       height:2,
       // alignSelf:'center'
     },
+    labelStyle: {
+      fontSize: 10,
+      padding:1,
+      margin:0,
+    },
+    tabStyle: {
+      height:48,
+      paddingBottom:12,
+      margin:0,
+    },
     style: {
-     backgroundColor: 'rgba(33, 150, 243, 1)',
+     backgroundColor: 'rgba(77, 77, 77, 79)',
      borderTopWidth: 0,
      borderTopColor: 'midnightblue',
+     padding:0,
+     margin:0,
 
    }
   },
