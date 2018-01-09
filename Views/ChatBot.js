@@ -1,4 +1,3 @@
-
 import React, { Component } from "react";
 import {Alert} from 'react-native'
 import ChatBot from 'react-native-chatbot';

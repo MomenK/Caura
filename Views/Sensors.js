@@ -223,9 +223,10 @@ disconnect()
 
       return (
   <View style={{flex: 1, flexDirection: 'column'}}>
+
         <View style={styles.canvasContainer}>
         <Image  resizeMode='contain' style={{width: this.win.width,height: this.win.height}}
-        source={require('./img/Logo_alpha.png')} />
+        source={require('../img/Logo_alpha.png')} />
           </View>
 
           <View style={styles.container}>
