@@ -144,32 +144,6 @@ const styles = StyleSheet.create({
     textAlign:'center',
     fontFamily: 'SF Pro Display',
   },
-  buttonText: {
-    padding: 20,
-    color: 'white'
-  },
-  canvasContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-    position: 'relative'
- },
- canvas: {
-  // position: 'absolute',
-     alignSelf: 'center',
-     top: 0,
-     left: 0,
-     bottom: 0,
-     right: 0,
-     //width:300
- },
- value: {
-  // color: '#F5FCFF',
-   fontWeight: 'bold',
-   fontSize: 30,
-   alignSelf: 'center'
 
- },
 
 })
