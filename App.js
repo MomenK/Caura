@@ -6,13 +6,14 @@ import {
 } from 'react-navigation';
 
 import './Views/global.js'
-import {HomeScreen } from './Views/Home.js'
+import {SignUpScreen } from './Views/SignUp.js'
 import {SignInScreen} from './Views/SignIn.js'
+import {AppViewsScreen} from './AppViews.js'
 
 
 
 const StackNavi =  StackNavigator({
-  Home: { screen: HomeScreen,
+  SignUp: { screen: SignUpScreen,
     navigationOptions: ({ navigation }) => ({
   				title: "",
   			  }) },
@@ -20,11 +21,16 @@ const StackNavi =  StackNavigator({
     navigationOptions: ({ navigation }) => ({
   				title: "",
   				}) },
+  AppViews: { screen: AppViewsScreen,
+    navigationOptions: ({ navigation }) => ({
+  				title: "",
+  			  }) },
 },{
   initialRouteName : 'SignIn',
   animationEnabled: true,
-   headerMode: 'float',
+   headerMode: 'none',
   lazy:true,
+  headerTintColor:'white',
   navigationOptions: {
      gesturesEnabled: false,
      headerStyle:{
@@ -40,6 +46,11 @@ const StackNavi =  StackNavigator({
        fontSize: 16,
        fontFamily: 'SF Pro Display',
      },
+     headerBackTitleStyle:{
+       color:'white',
+       backgroundColor: 'white',
+     },
+     headerLeft: ( <FontAwesome style={{fontSize: 15, color:"white",margin:20,marginTop:30}}>{Icons.chevronLeft}</FontAwesome>)
    },
 
 

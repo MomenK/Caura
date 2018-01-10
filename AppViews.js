@@ -10,7 +10,6 @@ import {HomeScreen } from './Views/Home.js'
 import {SensorsComponent} from './Views/Sensors.js'
 import {ChartScreen} from './Views/Chart.js'
 import {ChatBotScreen} from './Views/ChatBot.js'
-import {ExtraScreen} from './Views/Extra.js'
 
 
 
@@ -35,11 +34,7 @@ const TabNavi = TabNavigator({
   				title: "Bar",
   				tabBarIcon: ({ tintColor }) => <FontAwesome style={{fontSize: 15,color:tintColor}}>{Icons.bars}</FontAwesome>
   			}) },
-  Extra: { screen: ExtraScreen,
-    navigationOptions: ({ navigation }) => ({
-  				title: "Ext",
-  				tabBarIcon: ({ tintColor }) => <FontAwesome style={{fontSize: 15, color:tintColor}}>{Icons.refresh}</FontAwesome>
-  			}) },
+
 },{
   initialRouteName : 'Home',
   tabBarPosition: 'bottom',
@@ -90,7 +85,7 @@ TabNavi.router.getStateForAction = (action, state) => {
   return defaultGetStateForAction(action, state);
 };
 
-export default class App extends React.Component {
+export class AppViewsScreen extends React.Component {
   render() {
     return <TabNavi/>;
   }
