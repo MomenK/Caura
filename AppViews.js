@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
 import FontAwesome, { Icons } from "react-native-fontawesome";
+import {Image} from 'react-native'
 
 import {
   TabNavigator,NavigationActions
 } from 'react-navigation';
 
 import './Views/global.js'
-import {HomeScreen } from './Views/Home.js'
+import {HomeScreen} from './Views/Home.js'
 import {SensorsComponent} from './Views/Sensors.js'
 import {ChartScreen} from './Views/Chart.js'
 import {ChatBotScreen} from './Views/ChatBot.js'
+import {ExtraScreen} from './Views/Extra.js'
 
 
 
@@ -33,6 +35,12 @@ const TabNavi = TabNavigator({
     navigationOptions: ({ navigation }) => ({
   				title: "Bar",
   				tabBarIcon: ({ tintColor }) => <FontAwesome style={{fontSize: 15,color:tintColor}}>{Icons.bars}</FontAwesome>
+  			}) },
+  Extra: { screen: ExtraScreen,
+    navigationOptions: ({ navigation }) => ({
+  				title: "Extra",
+  				tabBarIcon: ({ tintColor }) =>   <Image  resizeMode='contain' resizeMethod='scale' style={{width: 18,tintColor: tintColor}}
+            source={require('./img/logo_orange1.png')} />
   			}) },
 
 },{
