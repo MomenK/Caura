@@ -61,6 +61,7 @@ export class SignInScreen extends Component {
           <TextInput
               style={styles.Input}
               placeholder="Password"
+              secureTextEntry = {true}
               placeholderTextColor='#fff'
               selectionColor='#F16651'
               underlineColorAndroid="transparent"

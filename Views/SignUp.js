@@ -84,6 +84,7 @@ export class SignUpScreen extends Component {
         style={styles.Input}
         placeholder="Password"
         placeholderTextColor='#fff'
+        secureTextEntry = {true}
         selectionColor='#F16651'
         underlineColorAndroid="transparent"
         />
@@ -91,6 +92,7 @@ export class SignUpScreen extends Component {
         <TextInput
         style={styles.Input}
         placeholder="Confirm Password"
+        secureTextEntry = {true}
         placeholderTextColor='#fff'
         selectionColor='#F16651'
         underlineColorAndroid="transparent"
@@ -98,20 +100,24 @@ export class SignUpScreen extends Component {
 
 
 
-        <TouchableHighlight
+        <TouchableHighlight  onPress={()=>{
+          navigate('SignIn')
+        }}
         style={styles.button}>
         <Text style={styles.text}>Sign up</Text>
         </TouchableHighlight>
 
 
         <TouchableHighlight style={{paddingLeft:40,paddingRight:40}} onPress={()=>{
-          navigate('SignIn')
+          Alert.alert('Sell Your Soul to Satan?')
         }}>
         <Text style={[styles.text, styles.small]}>Clicking Sign Up means that you agree to the
         <Text style={{color: '#39A9DB'}}> Terms & Conditions</Text> and <Text style={{color: '#39A9DB'}}>Privacy Policy</Text>.</Text>
         </TouchableHighlight>
 
-        <TouchableHighlight
+        <TouchableHighlight onPress={()=>{
+          navigate('SignIn')
+        }}
         style={[styles.button,{backgroundColor: 'rgba(255, 255, 255, 0.25)'}]} >
         <Text style={styles.text}> Already have an account?</Text>
         </TouchableHighlight>
