@@ -7,6 +7,7 @@ import {
 } from 'react-navigation';
 
 import './Views/global.js'
+import June from './Views/June_Logo.js'
 import {HomeScreen} from './Views/Home.js'
 import {SensorsComponent} from './Views/Sensors.js'
 import {ChartScreen} from './Views/Chart.js'
@@ -39,10 +40,13 @@ const TabNavi = TabNavigator({
   Extra: { screen: ExtraScreen,
     navigationOptions: ({ navigation }) => ({
   				title: "Extra",
-  				tabBarIcon: ({ tintColor }) =>   <Image  resizeMode='contain' resizeMethod='scale' style={{width: 18,tintColor: tintColor}}
-            source={require('./img/logo_orange1.png')} />
-  			}) },
-
+  				tabBarIcon: ({ tintColor }) =>    <June
+            height="30"
+            width  = "30"
+            scale = "0.1"
+            fill = {tintColor}
+            />
+          }) },
 },{
   initialRouteName : 'Home',
   tabBarPosition: 'bottom',
@@ -53,12 +57,12 @@ const TabNavi = TabNavigator({
 
     showIcon:true,
     showLabel:true,
-    activeTintColor:  '#F16641',
+    activeTintColor:  '#F16651',
 
     indicatorStyle:{
-       backgroundColor:'#F16641',
+       backgroundColor:'#F16651',
     //   width:20,
-       height:2,
+       height:0,
       // alignSelf:'center'
     },
     labelStyle: {

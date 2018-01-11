@@ -35,7 +35,7 @@ export class SignUpScreen extends Component {
         <View style={{
           flexDirection: 'row',
           justifyContent: 'center',
-          backgroundColor: '#F16641',
+          backgroundColor: '#F16651',
           alignSelf:'center',
           height :60,
           marginBottom:60,
@@ -68,7 +68,7 @@ export class SignUpScreen extends Component {
         style={styles.Input}
         placeholder="Full Name"
         placeholderTextColor='#fff'
-        selectionColor='#F16641'
+        selectionColor='#F16651'
         underlineColorAndroid="transparent"
         />
 
@@ -76,7 +76,7 @@ export class SignUpScreen extends Component {
         style={styles.Input}
         placeholder="Email"
         placeholderTextColor='#fff'
-        selectionColor='#F16641'
+        selectionColor='#F16651'
         underlineColorAndroid="transparent"
         />
 
@@ -84,7 +84,7 @@ export class SignUpScreen extends Component {
         style={styles.Input}
         placeholder="Password"
         placeholderTextColor='#fff'
-        selectionColor='#F16641'
+        selectionColor='#F16651'
         underlineColorAndroid="transparent"
         />
 
@@ -92,7 +92,7 @@ export class SignUpScreen extends Component {
         style={styles.Input}
         placeholder="Confirm Password"
         placeholderTextColor='#fff'
-        selectionColor='#F16641'
+        selectionColor='#F16651'
         underlineColorAndroid="transparent"
         />
 
@@ -139,7 +139,7 @@ export class SignUpScreen extends Component {
       margin:30,
       marginBottom:0,
       marginTop:13,
-      backgroundColor:'#F16641',
+      backgroundColor:'#F16651',
       borderRadius:30,
       borderWidth: 0,
       borderColor: '#fff',

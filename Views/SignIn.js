@@ -1,8 +1,14 @@
 import React, { Component } from 'react';
 import { StatusBar,Button,Alert,Platform, View, Text,TextInput,TouchableHighlight,TouchableWithoutFeedback, StyleSheet,Image,Dimensions } from 'react-native';
 import FontAwesome, { Icons } from "react-native-fontawesome";
+import Svg,{
+    Path, G
+} from 'react-native-svg';
 
 import './global.js'
+
+import June from './June_Logo.js';
+
 
 export class SignInScreen extends Component {
 
@@ -22,6 +28,7 @@ export class SignInScreen extends Component {
         backgroundColor="transparent"
         barStyle="light-content"
       />
+
       <Image  resizeMode='contain' style={{flex: 1,
           resizeMode:'cover',
           position: 'absolute',
@@ -30,8 +37,16 @@ export class SignInScreen extends Component {
 
       <View style={{ alignItems: 'center'}}>
         <Text  style={styles.titl} >Sign in</Text>
-        <Image  resizeMode='contain' resizeMethod='scale' style={{width: 56,height: 59,marginTop:40,marginBottom:70}}
-        source={require('../img/logo_orange1.png')} />
+
+        <View   style={{marginTop:20,marginBottom:70}}>
+        <June
+        height="80"
+        width  = "80"
+        scale = "0.3"
+        fill = "#F16651"
+        />
+        </View>
+
       </View>
 
       <View style={{flex:2}}>
@@ -39,7 +54,7 @@ export class SignInScreen extends Component {
             style={styles.Input}
             placeholder="Email"
             placeholderTextColor='#fff'
-            selectionColor='#F16641'
+            selectionColor='#F16651'
             underlineColorAndroid="transparent"
           />
 
@@ -47,7 +62,7 @@ export class SignInScreen extends Component {
               style={styles.Input}
               placeholder="Password"
               placeholderTextColor='#fff'
-              selectionColor='#F16641'
+              selectionColor='#F16651'
               underlineColorAndroid="transparent"
             />
 
@@ -99,7 +114,7 @@ const styles = StyleSheet.create({
      margin:30,
      marginBottom:27,
      marginTop:13,
-     backgroundColor:'#F16641',
+     backgroundColor:'#F16651',
      borderRadius:30,
      borderWidth: 0,
      borderColor: '#fff',
