@@ -1,10 +1,4 @@
 import React from 'react';
-import {
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-} from 'react-native';
-
 import Svg,{
     Path, G
 } from 'react-native-svg';
