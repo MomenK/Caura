@@ -2,15 +2,122 @@ import React, { Component } from 'react';
 import FontAwesome, { Icons } from "react-native-fontawesome";
 
 import {
- StackNavigator,NavigationActions
+ TabNavigator,StackNavigator,NavigationActions
 } from 'react-navigation';
 
 import './Views/global.js'
 import {SignUpScreen } from './Views/SignUp.js'
 import {SignInScreen} from './Views/SignIn.js'
+
+
+import './Views/global.js'
+import June from './Views/June_Logo.js'
+import {HomeScreen} from './Views/Home.js'
+import {SensorsComponent} from './Views/Sensors.js'
+import {ChartScreen} from './Views/Chart.js'
+import {ChatBotScreen} from './Views/ChatBot.js'
+import {ExtraScreen} from './Views/Extra.js'
 import {AppViewsScreen} from './AppViews.js'
 
 
+import {TabBarComponent} from './wrapper.js'
+
+
+const TabNavi = TabNavigator({
+
+      Home: { screen: HomeScreen,
+        navigationOptions: ({ navigation }) => ({
+              title: "HOME",
+              tabBarIcon: ({ tintColor }) => <FontAwesome style={{fontSize: 15,color:tintColor}}>{Icons.home}</FontAwesome>
+            }) },
+      Sensors: { screen: SensorsComponent,
+        navigationOptions: ({ navigation }) => ({
+              title: "TEST",
+              tabBarIcon: ({ tintColor }) => <FontAwesome style={{fontSize: 15, color:tintColor}}>{Icons.refresh}</FontAwesome>
+            }) },
+      Chart: {screen: ChartScreen,
+        navigationOptions: ({ navigation }) => ({
+              title: "DISCOVER",
+              tabBarIcon: ({ tintColor }) => <FontAwesome style={{fontSize: 15, color:tintColor}}>{Icons.areaChart}</FontAwesome>
+            }) },
+      ChatBot: { screen: ChatBotScreen,
+        navigationOptions: ({ navigation }) => ({
+              title: "JUNE",
+
+              tabBarIcon: ({ tintColor }) =>    <June
+                height="30"
+                width  = "30"
+                scale = "0.1"
+                fill = {tintColor}
+                />
+              }) },
+      Extra: { screen: ExtraScreen,
+        navigationOptions: ({ navigation }) => ({
+              title: "PROFILE",
+
+              tabBarIcon: ({ tintColor }) => <FontAwesome style={{fontSize: 15,color:tintColor}}>{Icons.bars}</FontAwesome>
+              }) },
+    },{
+      initialRouteName: 'Home',
+      tabBarComponent: TabBarComponent,
+      tabBarPosition: 'bottom',
+      swipeEnabled: false,
+      animationEnabled: true,
+      lazy:true,
+
+      navigationOptions: {
+
+
+         },
+      tabBarOptions: {
+
+        showIcon:true,
+        showLabel:true,
+        activeTintColor:  '#F16651',
+        inactiveTintColor :'#ddd',
+
+        indicatorStyle:{
+           backgroundColor:'#F16651',
+
+           height:0,
+
+        },
+        labelStyle: {
+          fontSize: 10,
+          padding:0,
+          margin:0,
+
+        },
+        tabStyle: {
+
+          paddingBottom:0,
+          margin:0,
+
+        },
+        style: {
+          alignItems:'center',
+         backgroundColor: 'rgba(77, 77, 77, 79)',
+         borderTopWidth: 0,
+         borderTopColor: 'midnightblue',
+         padding:4,
+         margin:0,
+           height:48,
+
+
+       }
+      },
+    });
+
+    const defaultGetStateForAction = TabNavi.router.getStateForAction;
+
+    TabNavi.router.getStateForAction = (action, state) => {
+      if ((!global.signedID) && (action.type === NavigationActions.NAVIGATE) &&
+         (action.routeName === "Sensors")) {
+        return null;
+      }
+
+      return defaultGetStateForAction(action, state);
+    };
 
 const StackNavi =  StackNavigator({
   SignUp: { screen: SignUpScreen,
@@ -21,7 +128,7 @@ const StackNavi =  StackNavigator({
     navigationOptions: ({ navigation }) => ({
   				title: "",
   				}) },
-  AppViews: { screen: AppViewsScreen,
+  AppViews: { screen: TabNavi,
     navigationOptions: ({ navigation }) => ({
   				title: "",
   			  }) },

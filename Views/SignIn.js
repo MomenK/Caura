@@ -69,6 +69,7 @@ export class SignInScreen extends Component {
 
           <TouchableHighlight onPress={()=>{
                navigate('AppViews')
+
         }}
            style={styles.button}>
            <Text style={styles.text}>Sign in</Text>
@@ -89,6 +90,7 @@ export class SignInScreen extends Component {
 
               <TouchableHighlight  onPress={()=>{
                    navigate('SignUp')
+
             }}>
             <Text style={styles.text}>Don&#39;t have an account?  <Text style={{color: '#39A9DB'}}>Sign up</Text> </Text>
               </TouchableHighlight>

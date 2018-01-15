@@ -50,7 +50,6 @@ this.win = Dimensions.get('window');
    this.setState({info: "ERROR: " + message,connection:false})
 
  }
-
  updateValue(key, value) {
 
    o =  this.ParserCon(value);
@@ -230,8 +229,6 @@ disconnect()
           </View>
 
           <View style={styles.container}>
-
-
           {Object.keys(this.sensors).map((key) => {
             return <View key={key}>
                     <Text style={styles.title} key={"t"+key}>
