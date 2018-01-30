@@ -1,3 +1,6 @@
+// THIS IS TO MAKE A DYNAMIC KEYBOARD RESPONSE FOR NAVIGATION BAR
+
+
 import React from 'react'
 import { Keyboard } from 'react-native'
 import { TabNavigator,TabBarBottom } from 'react-navigation'

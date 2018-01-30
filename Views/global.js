@@ -1,2 +1,2 @@
 global.signedID =  false;
-global.deviceName = "";
+global.deviceNam = "June";

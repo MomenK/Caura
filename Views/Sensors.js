@@ -17,11 +17,14 @@ import './global.js'
     super()
     this.manager = new BleManager()
     this.state = {info: "Ready...", values: {},connection: false,tryingtoCon:false}
-    this.prefixUUID = "f00011"
+  //  this.prefixUUID = "f00011"
+    this.prefixUUID = "f000bab"
     this.suffixUUID = "-0451-4000-b000-000000000000"
+    this.SerprefixUUID = "0000bab"
+    this.SersuffixUUID = "-0000-1000-8000-00805f9b34fb"
     this.sensors = { //This need to be changed to have each chemical in a different service
       1: "Cortisol",
-      2: "Testosterone"
+
 
     }
 
@@ -31,11 +34,11 @@ this.win = Dimensions.get('window');
   }
 
   serviceUUID(num) {
-    return this.prefixUUID + num + "0" + this.suffixUUID
+    return this.SerprefixUUID + "0" + this.SersuffixUUID
   }
 
   notifyUUID(ser,num) {
-    return this.prefixUUID + ser + num + this.suffixUUID
+    return this.prefixUUID + num + this.suffixUUID
   }
 
   writeUUID(num) {
@@ -93,14 +96,14 @@ scanAndConnect() {
      this.info("Scanning...")
      this.manager.startDeviceScan(null,
                                   null, (error, device) => {
-       //console.log(device)
+      //  console.log(global.deviceNam)
          if (error) {
            this.error(error.message)
            this.setState({tryingtoCon:false})
           return
          }
 
-         if (device.name === global.deviceName ) {
+         if (device.name === global.deviceNam ) {
            this.device = device
            this.info("Connecting device")
            this.manager.stopDeviceScan()
