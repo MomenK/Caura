@@ -183,7 +183,7 @@ disconnect()
 
  ParserCon(raw)
   {
-    value = raw.slice(0,4); //4 depends on the length of notification from BLE
+    value = raw.slice(0,8); //4 depends on the length of notification from BLE
     //  this.info(value+"..")
   //  value = "D/8="; //To testcase weird input use https://cryptii.com/base64-to-hex
     str = base64.decode(value);
