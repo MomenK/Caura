@@ -1,3 +1,3 @@
 global.signedID =  false;
-global.valueID = "";
+global.valueID = null;
 global.deviceNam = "June";
