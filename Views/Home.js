@@ -73,7 +73,7 @@ export class HomeScreen extends Component {
     const { navigate } = this.props.navigation;
     return (
       <View style={styles.container}>
-      <Text>Welcome, enter your unique KEYA ID</Text>
+      <Text>Welcome, {global.valueID}!</Text>
       <TextInput
           style={{height: 40}}
           placeholder="example: ABC-12"

@@ -8,6 +8,7 @@ import {
 import './Views/global.js'
 import {SignUpScreen } from './Views/SignUp.js'
 import {SignInScreen} from './Views/SignIn.js'
+import {ProfilesScreen} from './Views/Profiles.js'
 
 
 import './Views/global.js'
@@ -108,26 +109,30 @@ const TabNavi = TabNavigator({
       },
     });
 
-    const defaultGetStateForAction = TabNavi.router.getStateForAction;
-
-    TabNavi.router.getStateForAction = (action, state) => {
-      if ((!global.signedID) && (action.type === NavigationActions.NAVIGATE) &&
-         (action.routeName === "Sensors")) {
-        return null;
-      }
-
-      return defaultGetStateForAction(action, state);
-    };
+    // const defaultGetStateForAction = TabNavi.router.getStateForAction;
+    //
+    // TabNavi.router.getStateForAction = (action, state) => {
+    //   if ((!global.signedID) && (action.type === NavigationActions.NAVIGATE) &&
+    //      (action.routeName === "Sensors")) {
+    //     return null;
+    //   }
+    //
+    //   return defaultGetStateForAction(action, state);
+    // };
 
 const StackNavi =  StackNavigator({
-  SignUp: { screen: SignUpScreen,
-    navigationOptions: ({ navigation }) => ({
-  				title: "",
-  			  }) },
   SignIn: { screen: SignInScreen,
     navigationOptions: ({ navigation }) => ({
   				title: "",
   				}) },
+  SignUp: { screen: SignUpScreen,
+    navigationOptions: ({ navigation }) => ({
+  				title: "",
+  			  }) },
+  Profiles: { screen: ProfilesScreen,
+    navigationOptions: ({ navigation }) => ({
+  				title: "",
+  			  }) },
   AppViews: { screen: TabNavi,
     navigationOptions: ({ navigation }) => ({
   				title: "",

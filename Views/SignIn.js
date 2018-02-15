@@ -68,7 +68,7 @@ export class SignInScreen extends Component {
             />
 
           <TouchableHighlight onPress={()=>{
-               navigate('AppViews')
+               navigate('Profiles')
 
         }}
            style={styles.button}>
