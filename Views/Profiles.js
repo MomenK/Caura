@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StatusBar,Button,Alert,Platform, View, Text,TextInput,TouchableHighlight,TouchableWithoutFeedback, StyleSheet,Image,Dimensions } from 'react-native';
+import {ScrollView, StatusBar,Button,Alert,Platform, View, Text,TextInput,TouchableHighlight,TouchableWithoutFeedback, StyleSheet,Image,Dimensions } from 'react-native';
 import FontAwesome, { Icons } from "react-native-fontawesome";
 
 import './global.js'
@@ -10,6 +10,29 @@ export class ProfilesScreen extends Component {
   constructor ()
   {
     super()
+    this.state = {
+      text:{
+        1:"",
+        2:"",
+        3:"",
+        },
+      length:5,
+      names:{
+      1:"Fosca",
+      2:"Muru",
+      3:"Momen",
+      4:"Alistar",},
+      height:{
+      1:"159",
+      2:"166",
+      3:"200",
+      4:"190",},
+      values:{
+      1:"Scientist",
+      2:"CSO",
+      3:"king of mango juices",
+      4:"Designer",},
+    }
   }
 
   render() {
@@ -63,41 +86,76 @@ export class ProfilesScreen extends Component {
         </View>
 
 
-        <View>
+        <ScrollView ref="scrollView" contentContainerStyle={{ paddingVertical: 0}} keyboardShouldPersistTaps='always'>
 
+        {Object.keys(this.state.names).map((key) => {
+          return <TouchableHighlight  key={key}  onPress={()=>{
+                    global.valueID = this.state.values[key]
+                    navigate('AppViews')
+                  }}
+                  style={styles.button}>
+                    <Text style={styles.text} key={"t"+key} >
+                    {this.state.names[key] + " | " + this.state.height[key]}</Text>
+                    </TouchableHighlight>
+        })}
+
+<View  style={{marginBottom:100}}>
+
+<View  style={{flex: 1, flexDirection: 'row', justifyContent: 'center'}}>
+
+
+<TextInput ref="NameInput"
+style={styles.Input}
+placeholder="Name"
+placeholderTextColor='#fff'
+selectionColor='#F16651'
+underlineColorAndroid="transparent"
+onChangeText={(text) => {this.setState({text:{...this.state.text,1:text}})
+}}
+value={this.state.text[1]}
+/>
+
+<TextInput
+style={styles.Input}
+placeholder="Height"
+placeholderTextColor='#fff'
+selectionColor='#F16651'
+underlineColorAndroid="transparent"
+onChangeText={(text) => {this.setState({text:{...this.state.text,2:text}})
+}}
+value={this.state.text[2]}
+/>
+
+<TextInput
+style={styles.Input}
+placeholder="Position"
+placeholderTextColor='#fff'
+selectionColor='#F16651'
+underlineColorAndroid="transparent"
+onChangeText={(text) => {this.setState({text:{...this.state.text,3:text}})
+}}
+value={this.state.text[3]}
+/>
+</View>
         <TouchableHighlight  onPress={()=>{
-          global.valueID = "Momen"
-          navigate('AppViews')
-        }}
-        style={styles.button}>
-        <Text style={styles.text}>Momen Kamal</Text>
-        </TouchableHighlight>
-
-        <TouchableHighlight  onPress={()=>{
-          global.valueID = "Renato"
-          navigate('AppViews')
-        }}
-        style={styles.button}>
-        <Text style={styles.text}>Renato Circi</Text>
-        </TouchableHighlight>
-
-        <TouchableHighlight  onPress={()=>{
-          global.valueID = "Alistar"
-          navigate('AppViews')
-        }}
-        style={styles.button}>
-        <Text style={styles.text}>Alistar Magrini</Text>
-        </TouchableHighlight>
-
-
-        <TouchableHighlight  onPress={()=>{
-          navigate('SignUp')
+           this.setState(previousState=> ({
+           length : this.state.length +1,
+           names: {...previousState.names, [this.state.length]: [this.state.text[1]]},
+           height: {...previousState.height, [this.state.length] : [this.state.text[2]]},
+           values: {...previousState.values, [this.state.length]: [this.state.text[3]]} }))
+           this.refs.scrollView.scrollToEnd({animated: true})
+          //navigate('SignUp')
         }}
         style={[styles.button,{backgroundColor:'green'}]}>
         <Text style={styles.text}>Add</Text>
         </TouchableHighlight>
+  </View>
 
-        </View>
+
+
+
+
+        </ScrollView>
         </View>
         </View>
 
@@ -157,10 +215,11 @@ export class ProfilesScreen extends Component {
       fontFamily: 'SF Pro Display',
     },
     Input: {
-      margin:30,
-      marginBottom:16,
-      marginTop:0,
+      margin:3,
+      marginBottom:2,
+      marginTop:20,
       height: 44,
+      width:80,
       backgroundColor: 'rgba(255, 255, 255, 0.25)',
       borderRadius:30,
       alignItems: 'center',
