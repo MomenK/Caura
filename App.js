@@ -9,6 +9,7 @@ import './Views/global.js'
 import {SignUpScreen } from './Views/SignUp.js'
 import {SignInScreen} from './Views/SignIn.js'
 import {ProfilesScreen} from './Views/Profiles.js'
+import {MainScreen} from './Views/Main.js'
 
 
 import './Views/global.js'
@@ -26,21 +27,17 @@ import {TabBarComponent} from './wrapper.js'
 
 const TabNavi = TabNavigator({
 
-      Home: { screen: HomeScreen,
-        navigationOptions: ({ navigation }) => ({
-              title: "HOME",
-              tabBarIcon: ({ tintColor }) => <FontAwesome style={{fontSize: 15,color:tintColor}}>{Icons.home}</FontAwesome>
-            }) },
-      Sensors: { screen: SensorsComponent,
-        navigationOptions: ({ navigation }) => ({
-              title: "TEST",
-              tabBarIcon: ({ tintColor }) => <FontAwesome style={{fontSize: 15, color:tintColor}}>{Icons.refresh}</FontAwesome>
-            }) },
-      Chart: {screen: ChartScreen,
-        navigationOptions: ({ navigation }) => ({
-              title: "DISCOVER",
-              tabBarIcon: ({ tintColor }) => <FontAwesome style={{fontSize: 15, color:tintColor}}>{Icons.areaChart}</FontAwesome>
-            }) },
+      // Home: { screen: HomeScreen,
+      //   navigationOptions: ({ navigation }) => ({
+      //         title: "HOME",
+      //         tabBarIcon: ({ tintColor }) => <FontAwesome style={{fontSize: 15,color:tintColor}}>{Icons.home}</FontAwesome>
+      //       }) },
+
+      // Chart: {screen: ChartScreen,
+      //   navigationOptions: ({ navigation }) => ({
+      //         title: "DISCOVER",
+      //         tabBarIcon: ({ tintColor }) => <FontAwesome style={{fontSize: 15, color:tintColor}}>{Icons.areaChart}</FontAwesome>
+      //       }) },
       ChatBot: { screen: ChatBotScreen,
         navigationOptions: ({ navigation }) => ({
               title: "JUNE",
@@ -48,18 +45,23 @@ const TabNavi = TabNavigator({
               tabBarIcon: ({ tintColor }) =>    <June
                 height="30"
                 width  = "30"
-                scale = "0.1"
+                scale = "0.11"
                 fill = {tintColor}
                 />
               }) },
+      Sensors: { screen: SensorsComponent,
+        navigationOptions: ({ navigation }) => ({
+              title: "TEST",
+              tabBarIcon: ({ tintColor }) => <FontAwesome style={{fontSize: 20, color:tintColor}}>{Icons.stethoscope}</FontAwesome>
+            }) },
       Extra: { screen: ExtraScreen,
         navigationOptions: ({ navigation }) => ({
               title: "PROFILE",
 
-              tabBarIcon: ({ tintColor }) => <FontAwesome style={{fontSize: 15,color:tintColor}}>{Icons.bars}</FontAwesome>
+              tabBarIcon: ({ tintColor }) => <FontAwesome style={{fontSize: 20,color:tintColor}}>{Icons.bars}</FontAwesome>
               }) },
     },{
-      initialRouteName: 'Home',
+      initialRouteName: 'Extra',
       tabBarComponent: TabBarComponent,
       tabBarPosition: 'bottom',
       swipeEnabled: false,
@@ -137,6 +139,12 @@ const StackNavi =  StackNavigator({
     navigationOptions: ({ navigation }) => ({
   				title: "",
   			  }) },
+          Main: { screen: MainScreen,
+            navigationOptions: ({ navigation }) => ({
+                  title: "PROFILE",
+
+                  tabBarIcon: ({ tintColor }) => <FontAwesome style={{fontSize: 20,color:tintColor}}>{Icons.bars}</FontAwesome>
+                  }) },
 },{
   initialRouteName : 'SignIn',
   animationEnabled: true,

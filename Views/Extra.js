@@ -1,110 +1,207 @@
-import React, { Component } from 'react';
-import { Button,Alert,Platform, View, Text,TextInput,TouchableHighlight,TouchableWithoutFeedback, StyleSheet,Image,Dimensions } from 'react-native';
+import React, { Component } from "react";
+import { TouchableOpacity,ScrollView,Button,Alert,Platform, View, Text,TextInput,TouchableHighlight,TouchableWithoutFeedback, StyleSheet,Image,Dimensions } from 'react-native';
+
+import FontAwesome, { Icons } from "react-native-fontawesome";
+import {VictoryAnimation,Bar,VictoryPie, VictoryBar,VictoryChart, VictoryArea, VictoryAxis, VictoryLine,VictoryLabel, VictoryStack,VictoryTheme } from "victory-native";
+
+import Svg,{
+    Path, G
+} from 'react-native-svg';
 
 import './global.js'
+import Donut from './Donut.js';
+
 
 export class ExtraScreen extends Component {
+  static navigationOptions = {
+    title: 'History',
+  };
 
+  constructor() {
+    super();
+    this.state = {
+      mode:1,
+      type:1,
+      activtyZoom: 300,
+        recoveryZoom: 300,
+        activtyFont: 45,
+          recoveryFont: 45,
+    };
+  }
 
-  constructor ()
-  {
-    super()
-
-    this.state = {name:"",connection:false}
-    this.connectThenSend = this.connectThenSend.bind(this)
+  componentDidMount() {
 
   }
 
-  connectThenSend(msg)
-  {
-
-    if(!this.state.connection){
-
-
-        this.ws = new WebSocket("ws://desolate-ravine-94118.herokuapp.com/"); //Both IP and port
-
-        this.ws.onopen = () => {
-          // connection opened
-          this.setState({connection:true})
-          this.ws.send(msg); // send a message
-        };
-
-        this.ws.onmessage = e => {
-          // a message was received
-          console.log(e.data);
-           Alert.alert("Response:"+ e.data)
-        };
-
-        this.ws.onerror = e => {
-          // an error occurred
-          if (/No/.test(e.message))
-          {
-             Alert.alert("No Intenet connection")
-          }
-          console.log(e.message);
-
-        };
-
-        this.ws.onclose = e => {
-          // connection closed
-         this.setState({connection:false})
-          console.log(e.code, e.reason);
-        };
-    }
-    if (this.state.connection) {this.ws.send(msg)}
+  componentWillUnmount() {
 
   }
-  validate(text)
-  {
-    if (/^[A-Z]{3}-[0-9]{2}$/.test(text))
-    {
-  //  global.deviceName = text
-    global.deviceName = "Project Zero" //TODO: This Override must be removed later
 
-    global.signedID = true
-   }
-   else {
-     Alert.alert("Not a valid ID!")
-   }
 
-  }
 
   render() {
     const { navigate } = this.props.navigation;
+  if(this.state.type){
+
+    if(this.state.mode){
+
+          Graph =   <Donut
+           height= {300}
+           width= {300}
+           percent = {global.ProfileActivity}
+           fontsize= {45}
+           fontColor = "black"
+           normalColor = "#F16651"
+           backColor = "#ccc"
+           warningColor ="#c1503f"
+           warningLevel = {30}
+             />
+    }
+    else{
+
+          Graph =  <Donut
+          height= {300}
+          width= {300}
+          percent = {global.ProfileRecovery}
+          fontsize= {45}
+          fontColor = "black"
+          normalColor = "#13afaf"
+          backColor = "#ccc"
+          warningColor ="teal"
+          warningLevel = {30}
+            />
+    }
+  }
+  else {
+    Graph =
+
+ <View pointerEvents='none' style={{
+   flex:1,
+   alignItems: 'center',
+   flexDirection: 'row',
+    justifyContent: 'center',}}>
+
+
+        <VictoryBar
+          animate={{ duration: 500 }}
+            style={ {data: { fill: "#F16651" }}}
+
+          data={[
+            { x: 1, y: 2 },
+            { x: 2, y: 3 },
+            { x: 3, y: 50 },
+            { x: 4, y: 4 },
+            { x: 5, y: 2 },
+            { x: 6, y: 30 },
+            { x: 7, y: 5 },
+            { x: 8, y: 4 },
+            { x: 9, y: 2 },
+            { x: 10, y: 3 },
+            { x: 11, y: 50 },
+            { x: 12, y: 4 },
+            { x: 13, y: 2 },
+            { x: 14, y: 3 },
+            { x: 15, y: 5 },
+            { x: 16, y: 4 },
+            { x: 17, y: 2 },
+            { x: 18, y: 3 },
+            { x: 19, y: 5 },
+            { x: 20, y: 4 },
+            { x: 21, y: 20 },
+            { x: 22, y: 3 },
+            { x: 23, y: 5 },
+            { x: 24, y: 40 },
+          ]}
+        />
+
+
+
+      </View>
+
+
+  }
+
+
+
     return (
-      <View style={styles.container}>
-      <Text>Welcome, enter your unique KEYA ID</Text>
-      <TextInput
-          style={{height: 40}}
-          placeholder="example: ABC-12"
-          maxLength = {6}
-          autoCapitalize = 'characters'
-          onChangeText={(text) =>{
-            this.setState({name:text})
-            global.signedID = false
-         }}
-        />
-        <Button
-          title="Register"
-          onPress={() =>{
-            this.validate(this.state.name)
-            navigate('Sensors')
-            }
-          }
-        />
-        {this.state.connection &&
-        <Button
-          title="Test: connected"
-          onPress={this.connect}
-        />
-       }
-        <Button
-          title="Test: SendSocket"
-          onPress={() =>{
-            this.connectThenSend(this.state.name)
-          }
-          }
-        />
+      <View style={{
+        flex:1,
+      alignItems: 'center',
+      justifyContent: 'center',
+      flexDirection: 'column',
+      backgroundColor:'transparent'}}>
+
+                    <View style={{
+
+                      flex:2.3,
+                    alignItems: 'center',
+                    flexDirection: 'row',
+                    backgroundColor:'transparent'}} >
+
+
+                    <TouchableOpacity onPress={()=>{
+                    if( this.state.type)
+                         this.setState({type:0})
+                         else
+                          this.setState({type:1})
+                       }}
+                  >
+
+
+                  {Graph}
+                    </TouchableOpacity  >
+
+
+                            </View>
+
+
+              <View style={{
+                flex:1,
+              flexDirection:'row',
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor:'transparent'}} >
+
+                    <TouchableOpacity style ={{backgroundColor:'red'}}
+                    onPress={()=>{
+                      this.setState({type:1})
+                         this.setState({mode:1})
+
+                  }}
+                     style={styles.select}>
+                     <FontAwesome style={{fontSize: 20}}>{Icons.bars}</FontAwesome>
+                     <Text style={styles.text}>Activity</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={()=>{
+                      this.setState({type:1})
+                         this.setState({mode:0})
+
+                  }}
+                     style={styles.select}>
+                     <FontAwesome style={{fontSize: 20}}>{Icons.plusCircle}</FontAwesome>
+                     <Text style={styles.text}>Recovery</Text>
+                    </TouchableOpacity>
+              </View>
+
+
+
+              <View style={{
+                flex:1,
+              alignItems: 'flex-end',
+              justifyContent: 'center',
+              backgroundColor:'transparent'}} >
+
+                    <TouchableOpacity onPress={()=>{
+                         navigate('Sensors')
+
+                  }}
+                     style={styles.button}>
+                     <Text style={styles.text}>Test Now</Text>
+                    </TouchableOpacity>
+              </View>
+
+
 
         </View>
 
@@ -114,64 +211,72 @@ export class ExtraScreen extends Component {
 
 
 
+
 const styles = StyleSheet.create({
   container: {
-    flex:2,
-    padding: 60,
+    flex:1,
+    padding: 0,
   //  alignItems: 'center'
 
   },
   button: {
-    marginTop:30,
-    marginBottom: 15,
-  //  width: 260,
-    alignSelf: 'center',
-    alignItems: 'center',
-    backgroundColor: '#2196F3',
-
+    height: 44,
+     width:200,
+     padding: 10,
+     backgroundColor:'#F16651',
+     borderRadius:30,
+     borderWidth: 0,
+     borderColor: '#fff',
+     alignItems: 'center',
   },
-  buttonGreen: {
-    marginTop:30,
-    marginBottom: 15,
-  //  width: 260,
-    alignSelf: 'center',
-    alignItems: 'center',
-    backgroundColor: '#32cd3288'
+  select: {
+       width:200,
+       padding: 10,
+       backgroundColor:"grey",
+       borderRadius:0,
+       borderWidth: 0,
+       borderColor: '#fff',
+       alignItems: 'center',
+    },
+  fbbutton: {
+     height: 44,
+     padding: 10,
+     margin:30,
+     marginTop:80,
+     marginBottom:27,
+     backgroundColor:'#3B5998',
+     borderRadius:30,
+     borderWidth: 0,
+     borderColor: '#fff',
+     alignItems:'center'
   },
-  buttonText: {
-    padding: 20,
-    color: 'white'
+  text: {
+     color: 'white',
+     fontSize: 16,
+     textAlign:'center',
+     fontFamily: 'SF Pro Display',
+     alignSelf:'center',
   },
-  canvasContainer: {
-    flex: 1,
-    justifyContent: 'center',
+  titl: {
+     color: 'white',
+     fontSize: 16,
+     textAlign:'center',
+     fontFamily: 'SF Pro Display',
+     marginTop:23
+  },
+  Input: {
+    margin:30,
+    marginBottom:16,
+    marginTop:0,
+    height: 44,
+    backgroundColor: 'rgba(255, 255, 255, 0.25)',
+    borderRadius:30,
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-    position: 'relative'
- },
- canvas: {
-  // position: 'absolute',
-     alignSelf: 'center',
-     top: 0,
-     left: 0,
-     bottom: 0,
-     right: 0,
-     //width:300
- },
- value: {
-  // color: '#F5FCFF',
-   fontWeight: 'bold',
-   fontSize: 30,
-   alignSelf: 'center'
+    color: 'white',
+    fontSize: 16,
+    textAlign:'center',
+    fontFamily: 'SF Pro Display',
+  },
 
- },
 
- title: {
-  // position:'absolute',
-   alignSelf:'baseline',
-   color: 'dodgerblue',
-   fontWeight: 'bold',
-   fontSize: 20,
-   textAlign:'left'
- },
 })

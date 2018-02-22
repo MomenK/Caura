@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AsyncStorage,Button,Alert,Platform, View, Text,TextInput,TouchableHighlight,TouchableWithoutFeedback, StyleSheet,Image,Dimensions } from 'react-native';
+import { AsyncStorage,Button,Alert,Platform, View, Text,TextInput,TouchableHighlight,TouchableOpacity,TouchableWithoutFeedback, StyleSheet,Image,Dimensions } from 'react-native';
 import { BleManager } from 'react-native-ble-plx';
 import { Bubbles, DoubleBounce, Bars, Pulse } from 'react-native-loader';
 //import Orientation from 'react-native-orientation';
@@ -7,6 +7,7 @@ import base64 from 'base-64';
 
 
 import './global.js'
+import June from './June_Logo.js';
 
  export class SensorsComponent extends Component {
    static navigationOptions = {
@@ -91,6 +92,7 @@ this.win = Dimensions.get('window');
   }
 
 scanAndConnect() {
+  global.signedID = true;
    if(global.signedID){
      this.setState({tryingtoCon:true})
      this.info("Scanning...")
@@ -202,23 +204,37 @@ disconnect()
   render() {
     const { navigate } = this.props.navigation;
     if(this.state.connection){
-      button = <Button color = '#32cd32'
-        title= "Disconnect"
-        onPress={this.disconnect.bind(this)}
-      />
+
+    button =  <TouchableOpacity onPress={()=>{
+           this.disconnect()
+                  }}
+    style={[styles.button, {backgroundColor:'#32cd32', }]}>
+       <Text style={styles.text}>Disconnect</Text>
+      </TouchableOpacity>
+
+
     }
     else{
+
        if(this.state.tryingtoCon){
-         button = <Button color = 'red'
-           title= "Cancel"
-             onPress={this.stopScanAndDisconnect.bind(this)}
-         />
+
+         button = <TouchableOpacity onPress={()=>{
+                this.stopScanAndDisconnect()
+                       }}
+            style={[styles.button, {backgroundColor:'red', }]}>
+            <Text style={styles.text}>Disconnect</Text>
+           </TouchableOpacity>
+
+
        }
        else{
-       button=  <Button style={styles.button}
-       title= "Connect"
-       onPress={this.scanAndConnect.bind(this)}
-       />
+         button =  <TouchableHighlight onPress={()=>{
+                this.scanAndConnect()
+              }}
+            style={styles.button}>
+            <Text style={styles.text}>Connect</Text>
+           </TouchableHighlight>
+
      }
     }
 
@@ -226,12 +242,22 @@ disconnect()
       return (
   <View style={{flex: 1, flexDirection: 'column'}}>
 
-        <View style={styles.canvasContainer}>
-        <Image  resizeMode='contain' style={{width: this.win.width,height: this.win.height}}
-        source={require('../img/Logo_alpha.png')} />
-          </View>
+              <View   style={{
+                flex: 1,
+                marginTop:20,marginBottom:70,
+                justifyContent: 'center',
+                alignSelf:'center',
+              }}>
+              <June
+              height="80"
+              width  = "80"
+              scale = "0.3"
+              fill = "#F16651"
+              />
+              </View>
 
-          <View style={styles.container}>
+
+          <View style={[styles.container,{flex: 2}]}>
           {Object.keys(this.sensors).map((key) => {
             return <View key={key}>
                     <Text style={styles.title} key={"t"+key}>
@@ -239,8 +265,9 @@ disconnect()
                     <Text style={styles.value} key={"v"+key}> {(this.state.values[this.notifyUUID(2,key)] || "0")+" mM"}</Text>
                     </View>
           })}
+          </View>
 
-          <View style={{marginTop:70}}>
+          <View style={{flex: 1,margin:30}}>
 
           {button}
 
@@ -248,9 +275,9 @@ disconnect()
 
         <View style={{alignItems:'center'}}>
       <Text> {"Status: "} <Text>{this.state.info}</Text> </Text>
-      {this.state.tryingtoCon && <Bars size={10} color="blue" style={{alignSelf: 'center'}} /> }
-      {this.state.connection && <Pulse  size={10} color="blue" style={{alignSelf: 'center'}} /> }
-      </View>
+      {this.state.tryingtoCon && <Bars size={10} color="#F16651" style={{alignSelf: 'center'}} /> }
+      {this.state.connection && <Pulse  size={10} color="#F16651" style={{alignSelf: 'center'}} /> }
+
       </View>
 
         </View>
@@ -267,12 +294,13 @@ const styles = StyleSheet.create({
 
   },
   button: {
-    marginTop:30,
-    marginBottom: 15,
-  //  width: 260,
-    alignSelf: 'center',
-    alignItems: 'center',
-    backgroundColor: '#2196F3',
+     height: 44,
+     padding: 10,
+     backgroundColor:'#F16651',
+     borderRadius:30,
+     borderWidth: 0,
+     borderColor: '#fff',
+     alignItems: 'center',
 
   },
   buttonGreen: {
@@ -314,9 +342,23 @@ const styles = StyleSheet.create({
  title: {
   // position:'absolute',
    alignSelf:'baseline',
-   color: 'dodgerblue',
+   color: '#F16651',
    fontWeight: 'bold',
    fontSize: 20,
    textAlign:'left'
  },
+ text: {
+    color: 'white',
+    fontSize: 16,
+    textAlign:'center',
+    fontFamily: 'SF Pro Display',
+    alignSelf:'center',
+ },
 })
+
+
+
+// <View style={styles.canvasContainer}>
+// <Image  resizeMode='contain' style={{width: this.win.width,height: this.win.height}}
+// source={require('../img/Logo_alpha.png')} />
+//   </View>
