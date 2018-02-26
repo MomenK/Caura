@@ -67,16 +67,33 @@ _loader = async() =>{
               if(!this.store){
                 Alert.alert('database is empty')
                 this.store ={
+
+                        surname:{
+                          "Fosca":"Scientist",
+                          "Muru":"CSO",
+                          "Momen":"king of mango juices",
+                          "Alistar":"Designer",},
+                        gender:{
+                          "Fosca":"female",
+                          "Muru":"male",
+                          "Momen":"male",
+                          "Alistar":"male",},
+                        age:{
+                          "Fosca":"30",
+                          "Muru":"40",
+                          "Momen":"23",
+                          "Alistar":"26",},
                         height:{
                           "Fosca":"159",
                           "Muru":"166",
                           "Momen":"200",
                           "Alistar":"190",},
-                        values:{
-                          "Fosca":"Scientist",
-                          "Muru":"CSO",
-                          "Momen":"king of mango juices",
-                          "Alistar":"Designer",},
+                        weight:{
+                          "Fosca":"59",
+                          "Muru":"80",
+                          "Momen":"75",
+                          "Alistar":"78",},
+
                         activity:{
                           "Fosca":13,
                             "Muru":92,
@@ -87,10 +104,33 @@ _loader = async() =>{
                           "Muru":30,
                           "Momen":87,
                           "Alistar":43,},
-                        samplesValue:{},
-                        samplesTime:{},
-                        logsType:{},
-                        logsTime:{},
+                        samplesValue:{
+                          "Fosca":[12,24,10,12],
+                          "Momen":[11,34,0,0],
+                          "Muru":[21,32,15,4],
+                          "Alistar":[13,28,8,10],
+                      },
+                        samplesTime:{
+                          "Fosca":[1,3,7,8],
+                          "Momen":[6,8,10,11],
+                          "Muru":[1,8,13,24],
+                          "Alistar":[4,6,8,10],
+
+                        },
+                        logsValue:{
+                          "Fosca":["Started training","Sampled","Finished training","Sampled","Recoverd","Sampled","Recoverd","Sampled"],
+                          "Momen":["Started training","Sampled","Finished training","Sampled","Recoverd","Sampled","Recoverd","Sampled"],
+                          "Muru":["Started training","Sampled","Finished training","Sampled","Recoverd","Sampled","Recoverd","Sampled"],
+                          "Alistar":["Started training","Sampled","Finished training","Sampled","Recoverd","Sampled","Recoverd","Sampled"],
+
+                        },
+                        logsTime:{
+                          "Fosca":["1:00","3:20","7:13","8:45","9:00","9:20","11:13","11:45"],
+                          "Momen":["1:00","3:20","7:13","8:45","9:00","9:20","11:13","11:45"],
+                          "Muru":["1:00","3:20","7:13","8:45","9:00","9:20","11:13","11:45"],
+                          "Alistar":["1:00","3:20","7:13","8:45","9:00","9:20","11:13","11:45"],
+
+                        },
                       }
 
 
@@ -116,23 +156,10 @@ _loader = async() =>{
 
   componentWillMount() {
 
-//AsyncStorage.removeItem('store')
+AsyncStorage.removeItem('store')
 
 this._loader().done()
-//    AsyncStorage.setItem('store', JSON.stringify(this.store),()=>{
-     //  console.log('saved')
 
-
-
-
-
-      //  AsyncStorage.getItem('store',(err, res)=>{
-      //
-      //      this.store = res
-      //      console.log(res)
-      //
-      // })
-//   });
   }
 
 
@@ -198,12 +225,22 @@ this._loader().done()
                                 return <TouchableOpacity   key={key}  onPress={()=>{
 
                                           global.ProfileName=[key]
+                                          global.ProfileSurname=this.store.surname[key]
+                                          global.ProfileGender=this.store.gender[key]
+                                          global.ProfileAge=this.store.age[key]
                                           global.ProfileHeight=this.store.height[key]
-                                          global.ProfileValue=this.store.values[key]
+                                          global.ProfileWeight=this.store.weight[key]
+
                                           global.ProfileActivity=this.store.activity[key]
                                           global.ProfileRecovery=this.store.recovery[key]
 
+                                          global.ProfilesamplesTime=this.store.samplesTime[key]
+                                          global.ProfilesamplesValue=this.store.samplesValue[key]
 
+                                          global.ProfilelogsTime=this.store.logsTime[key]
+                                          global.ProfilelogsValue=this.store.logsValue[key]
+
+                                          console.log(  global.ProfilesamplesTime)
 
                                           navigate('Main')
                                         }}
@@ -217,10 +254,24 @@ this._loader().done()
                                                 {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
                                                 {text: 'OK', onPress: () => {
 
+                                                  delete  this.store.surname[key]
+                                                  delete  this.store.gender[key]
+                                                  delete  this.store.age[key]
                                                   delete  this.store.height[key]
-                                                  delete  this.store.values[key]
+                                                  delete  this.store.weight[key]
+
                                                   delete  this.store.activity[key]
                                                   delete  this.store.recovery[key]
+
+                                                  delete  this.store.samplesTime[key]
+                                                  delete  this.store.samplesValue[key]
+                                                  delete  this.store.logsTime[key]
+                                                  delete  this.store.logsValue[key]
+
+
+
+
+
                                                     this._saver().done()
                                                     this._loader().done()
 
@@ -230,9 +281,6 @@ this._loader().done()
                                               ],
                                               { cancelable: false }
                                             )
-
-
-
                                         }}
                                         style={styles.profile}>
 
@@ -292,12 +340,24 @@ this._loader().done()
                                Alert.alert("fields can't be empty!")
                               else {
 
+
+                                this.store.surname[this.state.text[1]]=this.state.text[3]
+                                this.store.gender[this.state.text[1]]="male"
+                                this.store.age[this.state.text[1]]=""
                                 this.store.height[this.state.text[1]]=this.state.text[2]
-                                this.store.values[this.state.text[1]]=this.state.text[3]
+                                this.store.weight[this.state.text[1]]=""
+
                                 this.store.activity[this.state.text[1]]=0
                                 this.store.recovery[this.state.text[1]]=0
+
+                                this.store.samplesTime[this.state.text[1]] =  [0,0,0,0]
+                                this.store.samplesValue[this.state.text[1]] = [0,0,0,0]
+
+                                this.store.logsTime[this.state.text[1]] =  ["","","","","","","",""]
+                                this.store.logsValue[this.state.text[1]] = ["Started training","Sampled","Finished training","Sampled","Recoverd","Sampled","Recoverd","Sampled"],
+
                                 this._saver().done();
-                                  this._loader().done()
+                                this._loader().done()
                              // this.setState(previousState=> ({
                              // length : this.state.length +1,
                              // names: {...previousState.names, [this.state.length]: [this.state.text[1]]},
