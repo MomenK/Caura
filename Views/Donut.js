@@ -40,7 +40,7 @@ export default function Donut({
           {x: 1, y: percent },
           {x: 2, y: 100 - percent}]
         }
-        innerRadius={105}
+        innerRadius={112}
         cornerRadius={10}
         labels={() => null}
         style={{

@@ -156,7 +156,7 @@ _loader = async() =>{
 
   componentWillMount() {
 
-AsyncStorage.removeItem('store')
+//AsyncStorage.removeItem('store')
 
 this._loader().done()
 
@@ -378,6 +378,7 @@ this._loader().done()
                                  </View>
                           </TouchableOpacity>
 
+                          <View  style={{flex: 1}}>
                             <View  style={{flex: 1, flexDirection: 'row', justifyContent: 'center'}}>
 
 
@@ -416,6 +417,44 @@ this._loader().done()
 
                             </View>
 
+                            <View  style={{flex: 1, flexDirection: 'row', justifyContent: 'center'}}>
+
+
+                                  <TextInput ref="NameInput"
+                                  style={styles.Input}
+                                  placeholder="Name"
+                                  placeholderTextColor='#fff'
+                                  selectionColor='#F16651'
+                                  underlineColorAndroid="transparent"
+                                  onChangeText={(text) => {this.setState({text:{...this.state.text,1:text}})
+                                  }}
+                                  value={this.state.text[1]}
+                                  />
+
+                                  <TextInput
+                                  style={styles.Input}
+                                  placeholder="Height"
+                                  placeholderTextColor='#fff'
+                                  selectionColor='#F16651'
+                                  underlineColorAndroid="transparent"
+                                  onChangeText={(text) => {this.setState({text:{...this.state.text,2:text}})
+                                  }}
+                                  value={this.state.text[2]}
+                                  />
+
+                                  <TextInput
+                                  style={styles.Input}
+                                  placeholder="Position"
+                                  placeholderTextColor='#fff'
+                                  selectionColor='#F16651'
+                                  underlineColorAndroid="transparent"
+                                  onChangeText={(text) => {this.setState({text:{...this.state.text,3:text}})
+                                  }}
+                                  value={this.state.text[3]}
+                                  />
+
+                                  </View>
+                              </View>
 
 
                     </View>

@@ -10,6 +10,15 @@ import {VictoryTooltip,VictoryVoronoiContainer,VictoryCursorContainer,VictorySca
 import FontAwesome, { Icons } from "react-native-fontawesome"
 import base64 from 'base-64';
 
+import DateTimePicker from 'react-native-modal-datetime-picker';
+
+import Svg,{
+    Path, G,Line
+} from 'react-native-svg';
+
+
+
+
 
 import './global.js'
 import June from './June_Logo.js';
@@ -20,18 +29,78 @@ import Donut from './Donut.js';
      title: 'You Today',
    };
 
+   _showDateTimePicker = () => this.setState({ isDateTimePickerVisible: true });
+
+  _hideDateTimePicker = () => this.setState({ isDateTimePickerVisible: false });
+
+  _handleDatePicked = (date) => {
+
+  //  console.log(  date.toString().split('') )
+  // console.log(  date.toString().slice(16,21) )
+
+
+
+
+
+  global.ProfilelogsTime[this.key]=date.toString().slice(16,21);
+
+
+  this.setState({enable:true})
+
+  this.store.logsTime[global.ProfileName] =  global.ProfilelogsTime;
+
+
+//  console.log("shot")
+
+  //  console.log(global.ProfilelogsTime)
+
+//  console.log(this.store.logsTime[global.ProfileName])
+//    console.log(this.state.logTime)
+
+
+this.setState({logTime: this.store.logsTime[global.ProfileName]})
+
+
+  this._saver().done();
+
+
+//  console.log(this.key)
+  Alert.alert('A date has been picked: ',date.toString().slice(16,21));
+
+    this._hideDateTimePicker();
+  };
+
+  getIndex(value, arr) {
+      for(var i = 0; i < arr.length; i++) {
+          if(arr[i] === value) {
+              return i;
+          }
+      }
+      return -1; //to handle the case where the value doesn't exist
+      }
+
   constructor() {
     super()
     this.manager = new BleManager()
+    console.log(global.ProfilelogsTime)
+    temp = this.getIndex("",global.ProfilelogsTime)
+    console.log(temp)
+    temp=temp==-1?8:temp;
+    console.log(temp)
     this.state = {info: "Ready...", values: {},connection: false,tryingtoCon:false,
     mode:1,
     type:1,
-    testOption:"",
     dataValue:  global.ProfilesamplesValue,
     dataTime:  global.ProfilesamplesTime,
-
+    logValue:  global.ProfilelogsValue,
+    logTime:  global.ProfilelogsTime,
+     isDateTimePickerVisible: false,
+     stage:temp,
+     enable:true,
   }
 
+ this.testOption =0;
+this.key="empty"
   this.store ={
 
           surname:{
@@ -130,23 +199,23 @@ this.win = Dimensions.get('window');
 
   }
 
+  _saver = async() =>{
 
 
-  componentWillUnmount() {
-
-    _saver = async() =>{
-
-
-      try {
-    await AsyncStorage.setItem('store', JSON.stringify(this.store));
-      console.log(this.store)
+    try {
+  await AsyncStorage.mergeItem('store', JSON.stringify(this.store));
+//    console.log(this.store)
 
 
-  } catch (error) {
-    // Error saving data
+} catch (error) {
+  // Error saving data
+}
+
   }
 
-    }
+  componentWillUnmount() { // not working
+
+
 
   }
 
@@ -261,8 +330,8 @@ disconnect()
   }
 
   render() {
-    const min = 1;
-    const max = 100;
+    const min = 20;
+    const max = 50;
     const rand = min + Math.random() * (max - min);
 
     const { navigate } = this.props.navigation;
@@ -292,28 +361,108 @@ disconnect()
        }
        else{
          button =  <TouchableHighlight onPress={()=>{
-           global.ProfilesamplesValue[3]=50;
-           global.ProfilesamplesTime[3]=11.5;
+          if( this.state.enable){
 
-           this.store.samplesTime =    global.ProfilesamplesTime;
-           this.store.samplesValue = global.ProfilesamplesValue;
-           this.setState({dataTime: this.store.samplesTime,dataValue: this.store.samplesValue})
+
+           timee= new Date().toString().slice(16,21);
+           momen = timee.split(':')
+          var Num = parseInt(momen[0] ,10) + parseInt(momen[1] ,10)/60
+           Num = Num.toFixed(2)
+           Num = parseFloat(Num)
+           console.log(Num)
+
            Alert.alert(
              'Test',
              'Please choose your test option',
              [
-               {text: 'Recovery', onPress: () => {this.setState({testOption:'Recovery'});   this.scanAndConnect() }},
-             {text: 'Post-workout', onPress: () => {this.setState({testOption:'Post-workout'});   this.scanAndConnect() }},
-             {text: 'Pre-workout', onPress: () => {this.setState({testOption:'Pre-workout'});   this.scanAndConnect() }},
+               {text: 'Recovery', onPress: () => {
+                 this.setState({enable:false})
+                 this.setState({stage:7}); this.testOption=2;
+
+                 global.ProfilesamplesValue[this.testOption]=Math.round(rand);
+                 global.ProfilesamplesTime[this.testOption]=   Num;
+                 this.store.samplesTime[global.ProfileName] =  global.ProfilesamplesTime;
+                 this.store.samplesValue[global.ProfileName] = global.ProfilesamplesValue;
+
+
+
+                 this.setState({dataTime: this.store.samplesTime[global.ProfileName],dataValue: this.store.samplesValue[global.ProfileName]})
+
+                 global.ProfilelogsTime[5]=timee;
+                 this.store.logsTime[global.ProfileName] =  global.ProfilelogsTime;
+               this.setState({logTime: this.store.logsTime[global.ProfileName]})
+
+                 this._saver().done();
+
+
+                  this.scanAndConnect()
+
+                }  },
+             {text: 'Post-workout', onPress: () => {
+               this.setState({enable:false})
+
+               this.setState({stage:4}); this.testOption=1;
+
+               global.ProfilesamplesValue[this.testOption]=Math.round(rand);
+               global.ProfilesamplesTime[this.testOption]=   Num;
+
+               this.store.samplesTime[global.ProfileName] =  global.ProfilesamplesTime;
+               this.store.samplesValue[global.ProfileName] = global.ProfilesamplesValue;
+
+               // console.log(this.store)
+
+               this.setState({dataTime: this.store.samplesTime[global.ProfileName],dataValue: this.store.samplesValue[global.ProfileName]})
+
+               global.ProfilelogsTime[3]=timee;
+               this.store.logsTime[global.ProfileName] =  global.ProfilelogsTime;
+             this.setState({logTime: this.store.logsTime[global.ProfileName]})
+
+
+               this._saver().done();
+
+                this.scanAndConnect()
+
+              }
+
+           },
+             {text: 'Pre-workout', onPress: () => {
+               this.setState({enable:false})
+
+               this.setState({stage:2});  this.testOption=0;
+
+               global.ProfilesamplesValue[this.testOption]= Math.round(rand);
+               global.ProfilesamplesTime[this.testOption]=  Num;
+
+               this.store.samplesTime[global.ProfileName] =  global.ProfilesamplesTime;
+               this.store.samplesValue[global.ProfileName] = global.ProfilesamplesValue;
+
+              // console.log(this.store)
+
+               this.setState({dataTime: this.store.samplesTime[global.ProfileName],dataValue: this.store.samplesValue[global.ProfileName]})
+               global.ProfilelogsTime[1]=timee;
+               this.store.logsTime[global.ProfileName] =  global.ProfilelogsTime;
+             this.setState({logTime: this.store.logsTime[global.ProfileName]})
+
+
+    this._saver().done();
+
+                this.scanAndConnect()
+
+
+
+
+             }},
 
              ],
-             { cancelable: true }
+             { cancelable: true}
            )
 
 
 
-              }}
-            style={styles.button}>
+         }
+         else Alert.alert('enter training time')
+       }}
+            style={[styles.button,{backgroundColor:this.state.enable?"#F16651":'#F9C1B3'}]}>
             <Text style={styles.title}>Connect</Text>
            </TouchableHighlight>
 
@@ -331,13 +480,13 @@ disconnect()
               flexDirection: 'row',
                justifyContent: 'center',}}>
                <Donut
-             height= {300}
-             width= {300}
+             height= {250}
+             width= {250}
              percent = {global.ProfileActivity}
-             fontsize= {45}
-             fontColor = "white"
+             fontsize= {36}
+             fontColor = "black"
              normalColor = "#F16651"
-             backColor = "rgba(256,256,256,0.25)"
+             backColor = "#ddd"
              warningColor ="#c1503f"
              warningLevel = {30}
                />
@@ -352,14 +501,14 @@ disconnect()
               flexDirection: 'row',
                justifyContent: 'center',}}>
                <Donut
-            height= {300}
-            width= {300}
+            height= {250}
+            width= {250}
             percent = {global.ProfileRecovery}
-            fontsize= {45}
-            fontColor = "white"
-            normalColor = "#13afaf"
-            backColor = "rgba(256,256,256,0.25)"
-            warningColor ="teal"
+            fontsize= {36}
+            fontColor = "black"
+            normalColor = "#F16651"
+            backColor = "#ddd"
+            warningColor ="#c1503f"
             warningLevel = {30}
               />
                   </View>
@@ -373,9 +522,9 @@ disconnect()
      alignItems: 'center',
       justifyContent: 'center',}}>
 
- <VictoryChart  width={400} height={300}
- domain={{x: [1, 24], y: [0, 50]}}
-domainPadding={{x: [20, 10], y: 5}}
+ <VictoryChart  width={400} height={250}
+ domain={{x: [0, 24], y: [0, 50]}}
+domainPadding={{x: [30, 10], y: 5}}
 
  theme={theme}
 
@@ -389,15 +538,15 @@ style={{
 
   containerComponent={<VictoryVoronoiContainer/>}
  >
-  <VictoryAxis tickValues={[0,6, 12, 18, 24]} tickFormat={["0:00","6:00", "12:00", "18:00", "11:59"]}/>
+  <VictoryAxis domain={[0, 24.0]} tickValues={[0,6, 12, 18, 24]} tickFormat={["0:00","6:00", "12:00", "18:00", "23:59"]}/>
 
- <VictoryAxis dependentAxis tickFormat={(tick) => tick}/>
+ <VictoryAxis dependentAxis domain={[0, 50]} tickFormat={(tick) => tick}/>
 
  <VictoryScatter
           size={10}
             animate={{ duration: 500 }}
-          labels={(d) => `${d.x}, ${d.y}mg/uL`}
-              labelComponent={<VictoryTooltip flyoutStyle={{fill: "black", stroke:axisColor}}/>}
+          labels={(d) => `${d.y}mg/uL`}
+              labelComponent={<VictoryTooltip flyoutStyle={{fill: "#F9C1B3", stroke:axisColor}}/>}
           style={ {data: { stroke: "#F16651" }}}
 
           data={[
@@ -428,13 +577,7 @@ style={{
 
             ]}
 
-            containerComponent={
-    <VictoryCursorContainer
-      cursorDimension="x"
-      cursorLabel={(d) => `${round(d.x, 2)}, ${round(d.y, 2)}`}
-      cursorLabel={(d) => `${round(d.x, 2)}, ${round(d.y, 2)}`}
-/>
-}
+
 
 
           />
@@ -446,7 +589,7 @@ style={{
 
     }
 
-
+var hjhj=0;
       return (
 
 
@@ -456,15 +599,30 @@ style={{
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: 'column',
-        backgroundColor:'transparent'}}>
+        backgroundColor:'#ffffff'}}>
+
+        <DateTimePicker
+          isVisible={this.state.isDateTimePickerVisible}
+          onConfirm={this._handleDatePicked}
+          onCancel={this._hideDateTimePicker}
+          mode="time"
+        />
                 <View style={{
+                  height:185,
                   flexDirection: 'row',
                   justifyContent: 'center',
-                  backgroundColor: '#F16651',
+                  backgroundColor: 'transparent',
                   alignSelf:'center',
-                  height :60,
+
                   marginBottom:0,
                 }}>
+                <Image resizeMode='contain' style={{
+                  height:185,
+
+                  position: 'absolute',
+                  justifyContent: 'center',}}
+                  source={require('../img/header.png')} />
+
                           <View style={{
                             position:'absolute',
                             marginTop:20,
@@ -488,17 +646,13 @@ style={{
 
                   <View style={{
 
-                    flex:2.2,
+                    flex:2.8,
                    alignSelf: 'stretch',
                   alignItems: 'center',
                   flexDirection: 'column',
                   backgroundColor:'transparent'}} >
 
-                  <Image  resizeMode='contain' style={{flex: 1.5,
-                    resizeMode:'cover',
-                    position: 'absolute',
-                    justifyContent: 'center',}}
-                    source={require('../img/Background1.png')} />
+
 
                       <TouchableOpacity onPress={()=>{
                       if( this.state.type)
@@ -506,8 +660,8 @@ style={{
                            else
                             this.setState({type:1})
                          }}
-
-                         onLongPress={()=>{}}>
+                         onLongPress={()=>{}}
+                      >
                         <View style={{
 
                           flex:1,
@@ -528,8 +682,9 @@ style={{
                 <View style={{
 
                 flexDirection:'row',
-                alignSelf:'stretch',
-                 alignItems: 'flex-start',
+                 width:200,
+                 flex:1,
+                 alignItems: 'center',
                 justifyContent: 'center',
                 backgroundColor:'transparent'}} >
 
@@ -537,7 +692,7 @@ style={{
                                   flex:1,
                                 flexDirection:'column',
                                 alignItems: 'center',
-                                 alignItems: 'stretch',
+
                                 justifyContent: 'center',
                               backgroundColor:'transparent'}} >
 
@@ -547,10 +702,11 @@ style={{
                                      this.setState({mode:1})
 
                               }}
-                                 style={[styles.select, {backgroundColor: !this.state.mode?"#ccc":"#F16651"}]}>
-                                 <FontAwesome style={{fontSize: 20,marginBottom:2,}}>{Icons.bolt}</FontAwesome>
-                                 <Text style={styles.text}>Intensity</Text>
+                                 style={[styles.select, {backgroundColor: this.state.mode?"#F9C1B3":"#F16651"}]}>
+                                 <FontAwesome style={{fontSize: 24,marginBottom:2,}}>{Icons.bolt}</FontAwesome>
+
                                 </TouchableOpacity>
+                                   <Text style={styles.text}>Strain</Text>
                                 </View>
 
                                 <View style={{
@@ -558,7 +714,7 @@ style={{
                                 flexDirection:'column',
                                 alignItems: 'center',
 
-                                 alignItems: 'stretch',
+
                                 justifyContent: 'center',
                                   backgroundColor:'transparent'}} >
 
@@ -568,10 +724,11 @@ style={{
                                      this.setState({mode:0})
 
                               }}
-                                 style={[styles.select, {backgroundColor: !this.state.mode?"#13afaf":"#ccc"}]}>
-                                 <FontAwesome style={{fontSize: 20,marginBottom:2}}>{Icons.star}</FontAwesome>
-                                 <Text style={styles.text}>Recovery</Text>
+                                 style={[styles.select, {backgroundColor: this.state.mode?"#F16651":"#F9C1B3"}]}>
+                                 <FontAwesome style={{fontSize: 24,marginBottom:2,}}>{Icons.moonO}</FontAwesome>
+
                                 </TouchableOpacity>
+                                <Text style={styles.text}>Recovery</Text>
                                 </View>
 
                           </View>
@@ -579,11 +736,30 @@ style={{
 
 
 
-                        <View style={{flex: 1,
+                        <View style={{flex: 2,
 
-
+                          borderTopWidth:2,
+                          borderTopColor: 'grey',
+                          marginTop:5,
                       backgroundColor:'transparent',
                       alignSelf:'stretch'}}>
+                                  <Svg
+                                                   height="1000"
+                                                   width="100"
+                                                   style={{position:'absolute', backgroundColor:'transparent',alignSelf:'flex-start'}}
+                                               >
+                                               <Line
+                                                      x1="31"
+                                                      y1="15"
+                                                      x2="31"
+                                                      y2="1000"
+                                                      stroke="grey"
+                                                      strokeDasharray="1,5"
+                                                      strokeLinecap="round"
+                                                      strokeWidth="2"
+                                                  />
+
+                                              </Svg>
 
                         <ScrollView
                          keyboardShouldPersistTaps='always'>
@@ -593,9 +769,11 @@ style={{
 
                          backgroundColor:'transparent' }}>
 
-                           {Object.keys(global.ProfilelogsTime).map((key) => {
 
-                      return (
+                           {Object.keys(this.state.logTime).map((key) => {
+                             hjhj =key+1
+                             if(key<this.state.stage)
+                        return (
                         <View   key={"V1"+key}
                         style={{flex: 1,
                            flexDirection: 'row',
@@ -603,21 +781,53 @@ style={{
                           borderBottomWidth: 0.5,
                           borderBottomColor: '#aaa',
                            }}>
+                            <TouchableOpacity key={key}
+                            onPress={()=>{ this.key = key; if(!(key%2)) this._showDateTimePicker();
 
-                           <View  key={"V2"+key}style={{flex:0.5,  alignItems: 'flex-start',   justifyContent: 'center'  }}>
+                            //  console.log(this.key)
 
-                          <FontAwesome  key={"F"+key} style={{fontSize: 30, color:'#F16651'}}>{Icons.circle}</FontAwesome>
+                             }}
+
+                             style={{
+                            flex:1,
+                            flexDirection:'row',
+                            }} >
+                           <View  key={"V2"+key}style={{flex:1,  alignItems: 'center',   justifyContent: 'center'  }}>
+
+                          <FontAwesome  key={key} style={{fontSize:this.state.stage <= key?40:30, color:this.state.stage <= key?'#F16651':'teal'}}>{Icons.circle}</FontAwesome>
                            </View>
 
-                          <View  key={"V3"+key} style={{flex:1.5,  alignItems: 'flex-start',   justifyContent: 'space-around'  }}>
-                          <Text  key={"T"+key}>{global.ProfilelogsTime[key]}</Text>
+                          <View  key={"V3"+key} style={{flex:3,  alignItems: 'flex-start',   justifyContent: 'space-around', paddingLeft:10  }}>
+                          <Text  key={"T"+key}>{  this.state.logTime[key]}</Text>
                           </View>
-                          <View  key={"V4"+key} style={{ flex:1, alignItems: 'flex-start',   justifyContent: 'space-around'}} >
-                          <Text  key={"V"+key}> {global.ProfilelogsValue[key]}</Text>
+                          <View  key={"V4"+key} style={{ flex:3, alignItems: 'flex-start',   justifyContent: 'space-around'}} >
+                          <Text  key={"V"+key}> { this.state.logValue[key]}</Text>
                           </View>
+                          </TouchableOpacity>
                        </View>
                      )})}
-</View>
+
+                          { <View   key={"V1"}
+                             style={{flex: 1,
+                                flexDirection: 'row',
+                                padding:7,
+                               borderBottomWidth: 0.5,
+                               borderBottomColor: '#aaa',
+                                }}>
+
+
+                                <View  key={"V2"}
+                                style={{flex:1,  alignItems: 'center',   justifyContent: 'center'  }}>
+                                <FontAwesome  key={hjhj} style={{fontSize:this.state.stage <= hjhj?40:30, color:this.state.stage <= hjhj?'#F16651':'teal'}}>{Icons.circle}</FontAwesome>
+                                </View>
+
+                                <View  key={"V3"} style={{flex:6,  alignItems: 'flex-start',   justifyContent: 'space-around'  }}>
+                                {button}
+                                </View>
+
+                             </View>
+                           }
+                     </View>
 
                          </ScrollView>
 
@@ -625,17 +835,15 @@ style={{
 
 
 
-                      <View style={{flex:0.7,alignItems:'center', justifyContent:"center",backgroundColor:'transparent',alignSelf:'stretch'}}>
+                      <View style={{flex:0.45,alignItems:'center', justifyContent:"center",backgroundColor:'transparent',alignSelf:'stretch'}}>
 
                               <View style={{flex:1,alignItems:'center', justifyContent:"center",backgroundColor:'transparent'}}>
                                     {this.state.tryingtoCon && <Bars size={12} color="#F16651"  /> }
                                     {this.state.connection && <Pulse  size={20} color="#F16651" /> }
+
                               </View>
 
 
-                              <View style={{flex:1,alignItems:'center', justifyContent:"center",backgroundColor:'transparent'}}>
-                                    {button}
-                              </View>
 
 
                               <View style={{alignItems:'center', justifyContent:"center",backgroundColor:'transparent'}}>
@@ -673,7 +881,7 @@ const styles = StyleSheet.create({
   },
   button: {
      height: 44,
-     width:300,
+     width:250,
      padding: 10,
      backgroundColor:'#F16651',
      borderRadius:30,
@@ -683,11 +891,12 @@ const styles = StyleSheet.create({
 
   },
   select: {
-
-         margin:0,
-       padding: 4,
+       width:40,
+       margin:0,
+       height:40,
+       padding: 8,
        backgroundColor:"grey",
-       borderRadius:0,
+       borderRadius:20,
        borderWidth: 0,
        borderColor: '#fff',
        alignItems: 'center',
@@ -734,7 +943,7 @@ const styles = StyleSheet.create({
    fontFamily: 'SF Pro Display',
  },
  text: {
-    color: 'white',
+    color: 'black',
     fontSize: 12,
     textAlign:'center',
     fontFamily: 'SF Pro Display',
@@ -759,10 +968,10 @@ const colors = [
   "#d9d9d9",
   "#f0f0f0"
 ];
-const charcoal = "white";
-const axisColor = "#aaa";
-const gridColor = 'rgba(2,2,2,0.5)';
-const scatterColor = "#252525";
+const charcoal = "black";
+const axisColor = "black";
+const gridColor = 'rgba(200,200,200,0.5)';
+const scatterColor = "#F9C1B3";
 
 // Typography
 const sansSerif =
