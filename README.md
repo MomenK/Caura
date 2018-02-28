@@ -24,6 +24,7 @@ CortiCare Limited React-Native Mobile Application
   - [react-native-chatbot](https://www.npmjs.com/package/react-native-chatbot)
     - Comment 290 in react-native-chatbot/ChatBot.js needs
     - Change InputView from styled.KeyboardAvoidingView to styled.View
+   -  react-native-modal-dropdown
     
     
 ### Dependencies Installation
