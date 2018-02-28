@@ -17,6 +17,9 @@ import Svg,{
 } from 'react-native-svg';
 
 
+//console.disableYellowBox = true;
+
+
 
 
 
@@ -65,7 +68,7 @@ this.setState({logTime: this.store.logsTime[global.ProfileName]})
 
 
 //  console.log(this.key)
-  Alert.alert('A date has been picked: ',date.toString().slice(16,21));
+  Alert.alert('Time has been picked: ',date.toString().slice(16,21));
 
     this._hideDateTimePicker();
   };
@@ -82,21 +85,22 @@ this.setState({logTime: this.store.logsTime[global.ProfileName]})
   constructor() {
     super()
     this.manager = new BleManager()
-    console.log(global.ProfilelogsTime)
+    console.log( global.ProfilesamplesTime)
     temp = this.getIndex("",global.ProfilelogsTime)
     console.log(temp)
-    temp=temp==-1?8:temp;
+    temp=temp==-1?6:temp;
     console.log(temp)
     this.state = {info: "Ready...", values: {},connection: false,tryingtoCon:false,
     mode:1,
     type:1,
     dataValue:  global.ProfilesamplesValue,
-    dataTime:  global.ProfilesamplesTime,
-    logValue:  global.ProfilelogsValue,
-    logTime:  global.ProfilelogsTime,
+    dataTime:   global.ProfilesamplesTime,
+    logValue:   global.ProfilelogsValue,
+    logTime:    global.ProfilelogsTime,
      isDateTimePickerVisible: false,
      stage:temp,
      enable:true,
+     attention:6,
   }
 
  this.testOption =0;
@@ -329,10 +333,15 @@ disconnect()
   return  (num);
   }
 
+  random(min,max){
+
+    return (min + Math.random() * (max - min))/100;
+
+
+  }
+
   render() {
-    const min = 20;
-    const max = 50;
-    const rand = min + Math.random() * (max - min);
+
 
     const { navigate } = this.props.navigation;
     if(this.state.connection){
@@ -376,19 +385,26 @@ disconnect()
              'Please choose your test option',
              [
                {text: 'Recovery', onPress: () => {
-                 this.setState({enable:false})
-                 this.setState({stage:7}); this.testOption=2;
+                // this.setState({enable:false})
+                 if(this.state.stage>=5){
+                   this.setState({stage:6}); this.testOption=3;  this.setState({attention:6})
 
-                 global.ProfilesamplesValue[this.testOption]=Math.round(rand);
-                 global.ProfilesamplesTime[this.testOption]=   Num;
-                 this.store.samplesTime[global.ProfileName] =  global.ProfilesamplesTime;
+                 }
+                 else {
+                      this.setState({stage:5}); this.testOption=2; this.setState({attention:6})
+                 }
+
+
+                 global.ProfilesamplesValue[this.testOption] = parseFloat(this.random(80,250).toFixed(2));
+                 global.ProfilesamplesTime[this.testOption]  =   Num;
+                 this.store.samplesTime[global.ProfileName]  =  global.ProfilesamplesTime;
                  this.store.samplesValue[global.ProfileName] = global.ProfilesamplesValue;
 
 
 
                  this.setState({dataTime: this.store.samplesTime[global.ProfileName],dataValue: this.store.samplesValue[global.ProfileName]})
 
-                 global.ProfilelogsTime[5]=timee;
+                 global.ProfilelogsTime[this.state.stage-1]=timee;
                  this.store.logsTime[global.ProfileName] =  global.ProfilelogsTime;
                this.setState({logTime: this.store.logsTime[global.ProfileName]})
 
@@ -397,13 +413,15 @@ disconnect()
 
                   this.scanAndConnect()
 
+                  this.refs.scrollView1.scrollToEnd({animated: true})
+
                 }  },
              {text: 'Post-workout', onPress: () => {
                this.setState({enable:false})
 
-               this.setState({stage:4}); this.testOption=1;
+               this.setState({stage:4}); this.testOption=1; this.setState({attention:2})
 
-               global.ProfilesamplesValue[this.testOption]=Math.round(rand);
+               global.ProfilesamplesValue[this.testOption]=parseFloat(this.random(80,250).toFixed(2));
                global.ProfilesamplesTime[this.testOption]=   Num;
 
                this.store.samplesTime[global.ProfileName] =  global.ProfilesamplesTime;
@@ -422,15 +440,17 @@ disconnect()
 
                 this.scanAndConnect()
 
+                this.refs.scrollView1.scrollToEnd({animated: true})
+
               }
 
            },
              {text: 'Pre-workout', onPress: () => {
                this.setState({enable:false})
 
-               this.setState({stage:2});  this.testOption=0;
+               this.setState({stage:2});  this.testOption=0; this.setState({attention:1})
 
-               global.ProfilesamplesValue[this.testOption]= Math.round(rand);
+               global.ProfilesamplesValue[this.testOption]= parseFloat(this.random(80,250).toFixed(2));
                global.ProfilesamplesTime[this.testOption]=  Num;
 
                this.store.samplesTime[global.ProfileName] =  global.ProfilesamplesTime;
@@ -439,16 +459,16 @@ disconnect()
               // console.log(this.store)
 
                this.setState({dataTime: this.store.samplesTime[global.ProfileName],dataValue: this.store.samplesValue[global.ProfileName]})
-               global.ProfilelogsTime[1]=timee;
+               global.ProfilelogsTime[0]=timee;
                this.store.logsTime[global.ProfileName] =  global.ProfilelogsTime;
              this.setState({logTime: this.store.logsTime[global.ProfileName]})
 
 
-    this._saver().done();
+              this._saver().done();
 
                 this.scanAndConnect()
 
-
+this.refs.scrollView1.scrollToEnd({animated: true})
 
 
              }},
@@ -457,13 +477,13 @@ disconnect()
              { cancelable: true}
            )
 
-
+this.refs.scrollView1.scrollToEnd({animated: true})
 
          }
-         else Alert.alert('enter training time')
+         else Alert.alert('Enter training time')
        }}
             style={[styles.button,{backgroundColor:this.state.enable?"#F16651":'#F9C1B3'}]}>
-            <Text style={styles.title}>Connect</Text>
+            <Text style={styles.title}>Connect & Test</Text>
            </TouchableHighlight>
 
      }
@@ -522,8 +542,8 @@ disconnect()
      alignItems: 'center',
       justifyContent: 'center',}}>
 
- <VictoryChart  width={400} height={250}
- domain={{x: [0, 24], y: [0, 50]}}
+ <VictoryChart  width={380} height={220}
+ domain={{x: [0, 24], y: [0, 3]}}
 domainPadding={{x: [30, 10], y: 5}}
 
  theme={theme}
@@ -545,7 +565,7 @@ style={{
  <VictoryScatter
           size={10}
             animate={{ duration: 500 }}
-          labels={(d) => `${d.y}mg/uL`}
+          labels={(d) => `${d.y}ng/ml`}
               labelComponent={<VictoryTooltip flyoutStyle={{fill: "#F9C1B3", stroke:axisColor}}/>}
           style={ {data: { stroke: "#F16651" }}}
 
@@ -566,6 +586,7 @@ style={{
           <VictoryLine
             animate={{ duration: 500 }}
               style={ {data: { stroke: "#F16651" }}}
+                interpolation={"cardinal"}
 
             data={[
 
@@ -761,7 +782,7 @@ var hjhj=0;
 
                                               </Svg>
 
-                        <ScrollView
+                        <ScrollView  ref="scrollView1"
                          keyboardShouldPersistTaps='always'>
 
                          <View style={{flex: 1,
@@ -782,7 +803,7 @@ var hjhj=0;
                           borderBottomColor: '#aaa',
                            }}>
                             <TouchableOpacity key={key}
-                            onPress={()=>{ this.key = key; if(!(key%2)) this._showDateTimePicker();
+                            onPress={()=>{ this.key = key; if((key==1||key==2)) this._showDateTimePicker();
 
                             //  console.log(this.key)
 
@@ -794,7 +815,7 @@ var hjhj=0;
                             }} >
                            <View  key={"V2"+key}style={{flex:1,  alignItems: 'center',   justifyContent: 'center'  }}>
 
-                          <FontAwesome  key={key} style={{fontSize:this.state.stage <= key?40:30, color:this.state.stage <= key?'#F16651':'teal'}}>{Icons.circle}</FontAwesome>
+                          <FontAwesome  key={key} style={{fontSize: this.state.attention == key?40:30, color:this.state.attention == key?'teal':"#76bcbc"}}>{Icons.circle}</FontAwesome>
                            </View>
 
                           <View  key={"V3"+key} style={{flex:3,  alignItems: 'flex-start',   justifyContent: 'space-around', paddingLeft:10  }}>
@@ -818,7 +839,7 @@ var hjhj=0;
 
                                 <View  key={"V2"}
                                 style={{flex:1,  alignItems: 'center',   justifyContent: 'center'  }}>
-                                <FontAwesome  key={hjhj} style={{fontSize:this.state.stage <= hjhj?40:30, color:this.state.stage <= hjhj?'#F16651':'teal'}}>{Icons.circle}</FontAwesome>
+                                <FontAwesome  key={hjhj} style={{fontSize:this.state.enable?40:30, color:this.state.enable?"#F16651":'#F9C1B3'}}>{Icons.circle}</FontAwesome>
                                 </View>
 
                                 <View  key={"V3"} style={{flex:6,  alignItems: 'flex-start',   justifyContent: 'space-around'  }}>
@@ -851,7 +872,7 @@ var hjhj=0;
                               {Object.keys(this.sensors).map((key) => {
                                 return <View key={key}>
 
-                                        <Text style={[styles.text,{color:'black'}]} key={"v"+key}> {this.sensors[key] + ": "+(this.state.values[this.notifyUUID(2,key)] || rand.toFixed(2))+" mM"}</Text>
+                                        <Text style={[styles.text,{color:'black'}]} key={"v"+key}> {this.sensors[key] + ": "+(this.state.values[this.notifyUUID(2,key)] || this.random(80,250).toFixed(2))+" ng/ml"}</Text>
                                         </View>
                               })}
 

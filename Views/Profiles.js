@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import {ActivityIndicator ,AsyncStorage,ScrollView, StatusBar,Button,Alert,Platform, View, Text,TextInput,TouchableHighlight,TouchableWithoutFeedback, TouchableOpacity,StyleSheet,Image,Dimensions } from 'react-native';
+import {Picker,ActivityIndicator ,AsyncStorage,ScrollView, StatusBar,Button,Alert,Platform, View, Text,TextInput,TouchableHighlight,TouchableWithoutFeedback, TouchableOpacity,StyleSheet,Image,Dimensions } from 'react-native';
 import FontAwesome, { Icons } from "react-native-fontawesome";
 import { Bubbles, DoubleBounce, Bars, Pulse } from 'react-native-loader';
+import ModalDropdown from 'react-native-modal-dropdown';
 
 import './global.js'
 import Donut from './Donut.js';
@@ -24,6 +25,7 @@ this.store=""
   this.state =   {
 
    isLoading:true,
+   adding:false,
 
     text:{
       1:"",
@@ -69,15 +71,15 @@ _loader = async() =>{
                 this.store ={
 
                         surname:{
-                          "Fosca":"Scientist",
-                          "Muru":"CSO",
-                          "Momen":"king of mango juices",
-                          "Alistar":"Designer",},
+                          "Fosca":"Mirata",
+                          "Muru":"Muthu",
+                          "Momen":"Kamal",
+                          "Alistar":"Margini",},
                         gender:{
-                          "Fosca":"female",
-                          "Muru":"male",
-                          "Momen":"male",
-                          "Alistar":"male",},
+                          "Fosca":"Female",
+                          "Muru":"Male",
+                          "Momen":"Male",
+                          "Alistar":"Male",},
                         age:{
                           "Fosca":"30",
                           "Muru":"40",
@@ -105,10 +107,10 @@ _loader = async() =>{
                           "Momen":87,
                           "Alistar":43,},
                         samplesValue:{
-                          "Fosca":[12,24,10,12],
-                          "Momen":[11,34,0,0],
-                          "Muru":[21,32,15,4],
-                          "Alistar":[13,28,8,10],
+                          "Fosca":[1.2,2.4,1.0,1.2],
+                          "Momen":[1.1,0.34,0,0],
+                          "Muru":[2.1,0.32,1.5,2.9],
+                          "Alistar":[1.3,2.8,0.8,1.0],
                       },
                         samplesTime:{
                           "Fosca":[1,3,7,8],
@@ -118,17 +120,17 @@ _loader = async() =>{
 
                         },
                         logsValue:{
-                          "Fosca":["Started training","Sampled","Finished training","Sampled","Recoverd","Sampled","Recoverd","Sampled"],
-                          "Momen":["Started training","Sampled","Finished training","Sampled","Recoverd","Sampled","Recoverd","Sampled"],
-                          "Muru":["Started training","Sampled","Finished training","Sampled","Recoverd","Sampled","Recoverd","Sampled"],
-                          "Alistar":["Started training","Sampled","Finished training","Sampled","Recoverd","Sampled","Recoverd","Sampled"],
+                          "Fosca":["Sampled","Started training","Finished training","Sampled","Recovery","Recovery"],
+                          "Momen":["Sampled","Started training","Finished training","Sampled","Recovery","Recovery"],
+                          "Muru":["Sampled","Started training","Finished training","Sampled","Recovery","Recovery"],
+                          "Alistar":["Sampled","Started training","Finished training","Sampled","Recovery","Recovery"],
 
                         },
                         logsTime:{
-                          "Fosca":["1:00","3:20","7:13","8:45","9:00","9:20","11:13","11:45"],
-                          "Momen":["1:00","3:20","7:13","8:45","9:00","9:20","11:13","11:45"],
-                          "Muru":["1:00","3:20","7:13","8:45","9:00","9:20","11:13","11:45"],
-                          "Alistar":["1:00","3:20","7:13","8:45","9:00","9:20","11:13","11:45"],
+                          "Fosca":["1:00","3:20","7:13","8:45","9:00","9:20"],
+                          "Momen":["1:00","3:20","7:13","8:45","9:00","9:20"],
+                          "Muru":["1:00","3:20","7:13","8:45","9:00","9:20"],
+                          "Alistar":["1:00","3:20","7:13","8:45","9:00","9:20"],
 
                         },
                       }
@@ -156,7 +158,7 @@ _loader = async() =>{
 
   componentWillMount() {
 
-//AsyncStorage.removeItem('store')
+AsyncStorage.removeItem('store')
 
 this._loader().done()
 
@@ -164,8 +166,209 @@ this._loader().done()
 
 
   render() {
+
     const { navigate } = this.props.navigation;
     if (this.state.isLoading) {
+      if(!this.state.adding)
+      {
+        List=   Object.keys(this.store.height).map((key) => {
+            return <TouchableOpacity   key={key}  onPress={()=>{
+
+                      global.ProfileName=[key]
+                      global.ProfileSurname=this.store.surname[key]
+                      global.ProfileGender=this.store.gender[key]
+                      global.ProfileAge=this.store.age[key]
+                      global.ProfileHeight=this.store.height[key]
+                      global.ProfileWeight=this.store.weight[key]
+
+                      global.ProfileActivity=this.store.activity[key]
+                      global.ProfileRecovery=this.store.recovery[key]
+
+                      global.ProfilesamplesTime=this.store.samplesTime[key]
+                      global.ProfilesamplesValue=this.store.samplesValue[key]
+
+                      global.ProfilelogsTime=this.store.logsTime[key]
+                      global.ProfilelogsValue=this.store.logsValue[key]
+
+                      console.log(  global.ProfilesamplesTime)
+
+                      navigate('Main')
+                    }}
+
+                    onLongPress={()=>{
+
+                      Alert.alert(
+                          'Warning!',
+                          'Are you sure you want to delete '+[key]+"'s Profile?",
+                          [
+                            {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+                            {text: 'OK', onPress: () => {
+
+                              delete  this.store.surname[key]
+                              delete  this.store.gender[key]
+                              delete  this.store.age[key]
+                              delete  this.store.height[key]
+                              delete  this.store.weight[key]
+
+                              delete  this.store.activity[key]
+                              delete  this.store.recovery[key]
+
+                              delete  this.store.samplesTime[key]
+                              delete  this.store.samplesValue[key]
+                              delete  this.store.logsTime[key]
+                              delete  this.store.logsValue[key]
+
+                                this._saver().done()
+                                this._loader().done()
+
+
+
+                          }    },
+                          ],
+                          { cancelable: false }
+                        )
+                    }}
+                    style={styles.profile}>
+
+
+                   <View style={{flex: 1,
+                      flexDirection: 'row',
+                      }}>
+                      <View style={{
+
+                      alignItems: 'center',
+                      flexDirection: 'row',
+                    backgroundColor:'transparent'}} >
+
+                    <FontAwesome style={{fontSize: 35, color:"white",margin:20}}>{Icons.userCircle}</FontAwesome>
+
+
+                    </View>
+
+                       <View style={{width: 180,  alignItems: 'flex-start',   justifyContent: 'space-around'  }} >
+                      <Text style={styles.text} key={"t"+key} >
+                      {[key] + " " + this.store.surname[key]}</Text>
+                      <Text style={[styles.text,{fontSize:12}]} key={"t"+key} >
+                      {this.store.age[key] + ", " + this.store.height[key]+ " cm"}</Text>
+                      </View>
+
+                      <View style={{width: 100,
+                      alignItems: 'center',
+                      flexDirection: 'row',
+                    backgroundColor:'transparent'}} >
+
+                                  <Donut
+                                 key={"A"+key}
+                                 height= {44}
+                                 width= {44}
+                                 percent = {this.store.activity[key]}
+                                 fontsize= {10}
+                                 fontColor = "white"
+                                 normalColor = "#F16651"
+                                 backColor = "#aaa"
+                                 warningColor ="#c1503f"
+                                 warningLevel = {30}
+                                   />
+
+                                   <Donut
+                                  key={"R"+key}
+                                  height= {44}
+                                  width= {44}
+                                  percent = {this.store.recovery[key]}
+                                  fontsize= {10}
+                                  fontColor = "white"
+                                  normalColor = "#13afaf"
+                                  backColor = "#aaa"
+                                  warningColor ="teal"
+                                  warningLevel = {30}
+                                    />
+                       </View>
+                       </View>
+
+                      </TouchableOpacity >
+                  })
+      }
+      else {
+
+        List=   <View  style={{flex: 1}}>
+            <View  style={{flex: 1, flexDirection: 'column', justifyContent: 'center'}}>
+
+
+                  <TextInput ref="NameInput"
+                  style={styles.Input}
+                  placeholder="Name"
+                  placeholderTextColor='#fff'
+                  selectionColor='#F16651'
+                  underlineColorAndroid="transparent"
+                  onChangeText={(text) => {this.setState({text:{...this.state.text,1:text}})
+                  }}
+                  value={this.state.text[1]}
+                  />
+
+                  <TextInput
+                  style={styles.Input}
+                  placeholder="Surname"
+                  placeholderTextColor='#fff'
+                  selectionColor='#F16651'
+                  underlineColorAndroid="transparent"
+                  onChangeText={(text) => {this.setState({text:{...this.state.text,2:text}})
+                  }}
+                  value={this.state.text[2]}
+                  />
+
+
+                <ModalDropdown   style={styles.Input} textStyle={styles.text} dropdownTextStyle={{fontSize:20}} dropdownStyle={{width:100, height:100}}  defaultValue="Gender" options={['Male', 'Female']}
+
+
+                onSelect={(itemValue, itemIndex) =>{
+
+                  this.setState({text:{...this.state.text,3:itemValue==="0"?"Male":"Female"}})  }}
+                />
+
+            </View>
+
+            <View  style={{flex: 1, flexDirection: 'column', justifyContent: 'center'}}>
+
+
+                  <TextInput ref="NameInput"
+                  style={styles.Input}
+                  placeholder="Age"
+                  placeholderTextColor='#fff'
+                  selectionColor='#F16651'
+                  underlineColorAndroid="transparent"
+                  onChangeText={(text) => {this.setState({text:{...this.state.text,4:text}})
+                  }}
+                  value={this.state.text[4]}
+                  />
+
+
+
+                  <TextInput
+                  style={styles.Input}
+                  placeholder="Height"
+                  placeholderTextColor='#fff'
+                  selectionColor='#F16651'
+                  underlineColorAndroid="transparent"
+                  onChangeText={(text) => {this.setState({text:{...this.state.text,5:text}})
+                  }}
+                  value={this.state.text[5]}
+                  />
+
+                  <TextInput
+                  style={styles.Input}
+                  placeholder="Weight"
+                  placeholderTextColor='#fff'
+                  selectionColor='#F16651'
+                  underlineColorAndroid="transparent"
+                  onChangeText={(text) => {this.setState({text:{...this.state.text,6:text}})
+                  }}
+                  value={this.state.text[6]}
+                  />
+
+                  </View>
+              </View>
+
+      }
     return (
 
       <View style={styles.container}>
@@ -205,6 +408,8 @@ this._loader().done()
                           justifyContent: 'flex-start',
                         }}>
                         <TouchableHighlight onPress={()=>{
+                            if(this.state.adding) this.setState({adding:false})
+                            else
                           navigate('SignIn')
                         }}>
                         <FontAwesome style={{fontSize: 15, color:"white",margin:25}}>{Icons.chevronLeft}</FontAwesome>
@@ -221,131 +426,26 @@ this._loader().done()
                            flex:1, justifyContent: 'center', alignItems: 'center',
                            padding:1}}>
 
-                              {Object.keys(this.store.height).map((key) => {
-                                return <TouchableOpacity   key={key}  onPress={()=>{
-
-                                          global.ProfileName=[key]
-                                          global.ProfileSurname=this.store.surname[key]
-                                          global.ProfileGender=this.store.gender[key]
-                                          global.ProfileAge=this.store.age[key]
-                                          global.ProfileHeight=this.store.height[key]
-                                          global.ProfileWeight=this.store.weight[key]
-
-                                          global.ProfileActivity=this.store.activity[key]
-                                          global.ProfileRecovery=this.store.recovery[key]
-
-                                          global.ProfilesamplesTime=this.store.samplesTime[key]
-                                          global.ProfilesamplesValue=this.store.samplesValue[key]
-
-                                          global.ProfilelogsTime=this.store.logsTime[key]
-                                          global.ProfilelogsValue=this.store.logsValue[key]
-
-                                          console.log(  global.ProfilesamplesTime)
-
-                                          navigate('Main')
-                                        }}
-
-                                        onLongPress={()=>{
-
-                                          Alert.alert(
-                                              'Warning!',
-                                              'Are you sure you want to delete '+[key]+"'s Profile?",
-                                              [
-                                                {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-                                                {text: 'OK', onPress: () => {
-
-                                                  delete  this.store.surname[key]
-                                                  delete  this.store.gender[key]
-                                                  delete  this.store.age[key]
-                                                  delete  this.store.height[key]
-                                                  delete  this.store.weight[key]
-
-                                                  delete  this.store.activity[key]
-                                                  delete  this.store.recovery[key]
-
-                                                  delete  this.store.samplesTime[key]
-                                                  delete  this.store.samplesValue[key]
-                                                  delete  this.store.logsTime[key]
-                                                  delete  this.store.logsValue[key]
-
-
-
-
-
-                                                    this._saver().done()
-                                                    this._loader().done()
-
-
-
-                                              }    },
-                                              ],
-                                              { cancelable: false }
-                                            )
-                                        }}
-                                        style={styles.profile}>
-
-
-                                       <View style={{flex: 1,
-                                          flexDirection: 'row',
-                                          }}>
-
-                                           <View style={{width: 200,  alignItems: 'flex-start',   justifyContent: 'space-around'  }} >
-                                          <Text style={styles.text} key={"t"+key} >
-                                          {[key] + " | " + this.store.height[key]}</Text>
-                                          </View>
-
-                                          <View style={{width: 100,
-                                          alignItems: 'center',
-                                          flexDirection: 'row',
-                                        backgroundColor:'transparent'}} >
-
-                                                      <Donut
-                                                     key={"A"+key}
-                                                     height= {44}
-                                                     width= {44}
-                                                     percent = {this.store.activity[key]}
-                                                     fontsize= {10}
-                                                     fontColor = "white"
-                                                     normalColor = "#F16651"
-                                                     backColor = "#aaa"
-                                                     warningColor ="#c1503f"
-                                                     warningLevel = {30}
-                                                       />
-
-                                                       <Donut
-                                                      key={"R"+key}
-                                                      height= {44}
-                                                      width= {44}
-                                                      percent = {this.store.recovery[key]}
-                                                      fontsize= {10}
-                                                      fontColor = "white"
-                                                      normalColor = "#13afaf"
-                                                      backColor = "#aaa"
-                                                      warningColor ="teal"
-                                                      warningLevel = {30}
-                                                        />
-                                           </View>
-                                           </View>
-
-                                          </TouchableOpacity >
-                                      })}
+                           {List}
                           </View>
 
                           </ScrollView>
-                          <View  style={{marginBottom:100}}>
+                          <View  style={{marginBottom:0}}>
 
 
                           <TouchableOpacity  onPress={()=>{
-                            if (this.state.text[1] === "" || this.state.text[2] === "" || this.state.text[3] === "")
+
+                            if(this.state.adding){
+                            if (this.state.text[1] === "" || this.state.text[2] === "" || this.state.text[3] === ""|| this.state.text[4] === "" || this.state.text[5] === "" || this.state.text[6] === "")
                                Alert.alert("fields can't be empty!")
                               else {
+                                this.setState({adding:!this.state.adding})
 
-
-                                this.store.surname[this.state.text[1]]=this.state.text[3]
-                                this.store.gender[this.state.text[1]]="male"
-                                this.store.age[this.state.text[1]]=""
-                                this.store.height[this.state.text[1]]=this.state.text[2]
-                                this.store.weight[this.state.text[1]]=""
+                                this.store.surname[this.state.text[1]]=this.state.text[2]
+                                this.store.gender[this.state.text[1]]=this.state.text[3]
+                                this.store.age[this.state.text[1]]=this.state.text[4]
+                                this.store.height[this.state.text[1]]=this.state.text[5]
+                                this.store.weight[this.state.text[1]]=this.state.text[6]
 
                                 this.store.activity[this.state.text[1]]=0
                                 this.store.recovery[this.state.text[1]]=0
@@ -353,11 +453,11 @@ this._loader().done()
                                 this.store.samplesTime[this.state.text[1]] =  [0,0,0,0]
                                 this.store.samplesValue[this.state.text[1]] = [0,0,0,0]
 
-                                this.store.logsTime[this.state.text[1]] =  ["","","","","","","",""]
-                                this.store.logsValue[this.state.text[1]] = ["Started training","Sampled","Finished training","Sampled","Recoverd","Sampled","Recoverd","Sampled"],
-
+                                this.store.logsTime[this.state.text[1]] =  ["","","","","",""]
+                                this.store.logsValue[this.state.text[1]] = ["Sampled","Started training","Finished training","Sampled","Recovery","Recovery"],
+                                   Alert.alert("added")
                                 this._saver().done();
-                                this._loader().done()
+                                this._loader().done();
                              // this.setState(previousState=> ({
                              // length : this.state.length +1,
                              // names: {...previousState.names, [this.state.length]: [this.state.text[1]]},
@@ -367,7 +467,10 @@ this._loader().done()
                              // values: {...previousState.values, [this.state.length]: [this.state.text[3]]} }))
                           }
                            this.refs.scrollView.scrollToEnd({animated: true})
-                          }}
+                         }
+                         else {  this.setState({adding:!this.state.adding})}
+
+                       }}
                           style={[styles.button,{backgroundColor:'green'}]}>
 
                                 <View style={{  flex:1,
@@ -378,83 +481,7 @@ this._loader().done()
                                  </View>
                           </TouchableOpacity>
 
-                          <View  style={{flex: 1}}>
-                            <View  style={{flex: 1, flexDirection: 'row', justifyContent: 'center'}}>
 
-
-                                  <TextInput ref="NameInput"
-                                  style={styles.Input}
-                                  placeholder="Name"
-                                  placeholderTextColor='#fff'
-                                  selectionColor='#F16651'
-                                  underlineColorAndroid="transparent"
-                                  onChangeText={(text) => {this.setState({text:{...this.state.text,1:text}})
-                                  }}
-                                  value={this.state.text[1]}
-                                  />
-
-                                  <TextInput
-                                  style={styles.Input}
-                                  placeholder="Height"
-                                  placeholderTextColor='#fff'
-                                  selectionColor='#F16651'
-                                  underlineColorAndroid="transparent"
-                                  onChangeText={(text) => {this.setState({text:{...this.state.text,2:text}})
-                                  }}
-                                  value={this.state.text[2]}
-                                  />
-
-                                  <TextInput
-                                  style={styles.Input}
-                                  placeholder="Position"
-                                  placeholderTextColor='#fff'
-                                  selectionColor='#F16651'
-                                  underlineColorAndroid="transparent"
-                                  onChangeText={(text) => {this.setState({text:{...this.state.text,3:text}})
-                                  }}
-                                  value={this.state.text[3]}
-                                  />
-
-                            </View>
-
-                            <View  style={{flex: 1, flexDirection: 'row', justifyContent: 'center'}}>
-
-
-                                  <TextInput ref="NameInput"
-                                  style={styles.Input}
-                                  placeholder="Name"
-                                  placeholderTextColor='#fff'
-                                  selectionColor='#F16651'
-                                  underlineColorAndroid="transparent"
-                                  onChangeText={(text) => {this.setState({text:{...this.state.text,1:text}})
-                                  }}
-                                  value={this.state.text[1]}
-                                  />
-
-                                  <TextInput
-                                  style={styles.Input}
-                                  placeholder="Height"
-                                  placeholderTextColor='#fff'
-                                  selectionColor='#F16651'
-                                  underlineColorAndroid="transparent"
-                                  onChangeText={(text) => {this.setState({text:{...this.state.text,2:text}})
-                                  }}
-                                  value={this.state.text[2]}
-                                  />
-
-                                  <TextInput
-                                  style={styles.Input}
-                                  placeholder="Position"
-                                  placeholderTextColor='#fff'
-                                  selectionColor='#F16651'
-                                  underlineColorAndroid="transparent"
-                                  onChangeText={(text) => {this.setState({text:{...this.state.text,3:text}})
-                                  }}
-                                  value={this.state.text[3]}
-                                  />
-
-                                  </View>
-                              </View>
 
 
                     </View>
@@ -470,10 +497,10 @@ this._loader().done()
       );
      }
      else{
-       return(  <View style={{flex:1, justifyContent:'center',alignItems:'center', backgroundColor:'transparent'}}>
+       return(  <View style={{flex:1, justifyContent:'center',alignItems:'center', backgroundColor:'#F9C1B3'}}>
 
 <View>
-      <ActivityIndicator size="large" color="#0000ff" />
+      <ActivityIndicator size="large" color="#F16651" />
       <Text> Loading</Text>
 </View>
        </View>);
@@ -554,7 +581,8 @@ this._loader().done()
       marginBottom:2,
       marginTop:20,
       height: 44,
-      width:80,
+      width:300,
+      padding:10,
       backgroundColor: 'rgba(255, 255, 255, 0.25)',
       borderRadius:30,
       alignItems: 'center',
