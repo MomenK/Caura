@@ -97,26 +97,26 @@ _loader = async() =>{
                           "Alistar":"78",},
 
                         activity:{
-                          "Fosca":13,
-                            "Muru":92,
-                          "Momen":35,
-                          "Alistar":81},
+                          "Fosca":86,
+                          "Muru":50,
+                          "Momen":95,
+                          "Alistar":12},
                         recovery:{
-                          "Fosca":20,
-                          "Muru":30,
-                          "Momen":87,
-                          "Alistar":43,},
+                          "Fosca":75,
+                          "Muru":89,
+                          "Momen":20,
+                          "Alistar":91,},
                         samplesValue:{
-                          "Fosca":[1.2,2.4,1.0,1.2],
-                          "Momen":[1.1,0.34,0,0],
-                          "Muru":[2.1,0.32,1.5,2.9],
-                          "Alistar":[1.3,2.8,0.8,1.0],
+                          "Fosca":[6.2, 8.7, 3.2, 0.9],
+                          "Muru": [5.9, 7.8, 1.5, 1],
+                          "Momen":[5.6, 9, 5, 3],
+                          "Alistar":[8.1, 8.2, 2.2, 0.9],
                       },
                         samplesTime:{
-                          "Fosca":[1,3,7,8],
-                          "Momen":[6,8,10,11],
-                          "Muru":[1,8,13,24],
-                          "Alistar":[4,6,8,10],
+                          "Fosca":[9, 10, 14.5, 18],
+                          "Muru":[9, 10,  14.5, 18],
+                          "Momen":[9, 10,  14.5, 18],
+                          "Alistar":[9, 10,  14.5, 18],
 
                         },
                         logsValue:{
@@ -158,7 +158,7 @@ _loader = async() =>{
 
   componentWillMount() {
 
-AsyncStorage.removeItem('store')
+//AsyncStorage.removeItem('store')
 
 this._loader().done()
 
@@ -450,12 +450,12 @@ this._loader().done()
                                 this.store.activity[this.state.text[1]]=0
                                 this.store.recovery[this.state.text[1]]=0
 
-                                this.store.samplesTime[this.state.text[1]] =  [0,0,0,0]
-                                this.store.samplesValue[this.state.text[1]] = [0,0,0,0]
+                                this.store.samplesTime[this.state.text[1]] =  [null,null,null,null]
+                                this.store.samplesValue[this.state.text[1]] = [0,null,null,null]
 
                                 this.store.logsTime[this.state.text[1]] =  ["","","","","",""]
                                 this.store.logsValue[this.state.text[1]] = ["Sampled","Started training","Finished training","Sampled","Recovery","Recovery"],
-                                   Alert.alert("added")
+                                   Alert.alert("Player Added")
                                 this._saver().done();
                                 this._loader().done();
                              // this.setState(previousState=> ({
