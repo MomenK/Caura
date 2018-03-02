@@ -25,6 +25,7 @@ CortiCare Limited React-Native Mobile Application
     - Comment 290 in react-native-chatbot/ChatBot.js needs
     - Change InputView from styled.KeyboardAvoidingView to styled.View
    -  react-native-modal-dropdown
+   -  react-native-modal-datetime-picker
     
     
 ### Dependencies Installation
