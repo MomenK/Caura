@@ -1,5 +1,5 @@
 # KEYA
-CortiCare Limited React-Native Mobile Application 
+CortiCare Limited Mobile Application 
 
 
 <p align="center">
