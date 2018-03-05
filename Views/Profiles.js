@@ -167,8 +167,6 @@ _loader = async() =>{
 
   componentWillMount() {
 
-//AsyncStorage.removeItem('store')
-
 this._loader().done()
 
   }
@@ -461,7 +459,7 @@ this._loader().done()
                           }}
 
                             style={{backgroundColor:'transparent'}}>
-                              <Text style={{color:"red"}}>Rest</Text>
+                              <Text style={{color:"red",fontSize:5}}>Reset</Text>
                           </TouchableOpacity>
 
 

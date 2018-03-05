@@ -607,7 +607,7 @@ this.refs.scrollView1.scrollToEnd({animated: true})
 
  <VictoryChart  width={380} height={220}
  domain={{x: [0, 24],y: [0, 10]}}
-domainPadding={{x: [30, 10], y: 5}}
+domainPadding={{x: [30, 0], y: 5}}
 
  theme={theme}
 
@@ -621,10 +621,27 @@ style={{
 
   containerComponent={<VictoryVoronoiContainer/>}
  >
-  <VictoryAxis domain={[0, 24.0]} tickValues={[0,6, 12, 18, 24]} tickFormat={["0:00","6:00", "12:00", "18:00", "23:59"]}/>
+  <VictoryAxis domain={[0, 24]} tickValues={[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23]}
+  tickFormat={
+                (x) => {
+                  if(!(x%3)){
+                   hour = Math.floor(x)
+                   min = ((x-Math.floor(x))*60)
+                   min = ("0" + min).slice(-2);
+                   return hour.toString()+":"+min.toString()
+                 }
+                }
+              }
+                 />
 
 
- <VictoryAxis dependentAxis  tickFormat={(tick) => tick}/>
+  <VictoryAxis dependentAxis
+               domain={[-10, 15]}
+               offsetX={50}
+               orientation="left"
+               standalone={false}
+               style={axisOne}
+             />
 
  <VictoryScatter
           size={10}
@@ -1027,8 +1044,32 @@ const styles = StyleSheet.create({
     fontFamily: 'SF Pro Display',
     alignSelf:'center',
  },
+
+
 })
 
+const  axisOne = Object.assign( {
+      grid: {
+        stroke: (tick) =>
+           gridColor,
+        strokeWidth: 0
+      },
+      axis: { stroke: "transparent", strokeWidth: 0 },
+      ticks: {
+
+        size: 0,
+        stroke: "black"
+      },
+      tickLabels: {
+        fill: "black",
+        fontFamily: "inherit",
+        fontSize: fontSize,
+        angle:0,
+
+
+      },
+
+    })
 
 /*
   "grayscale" theme (VictoryTheme.grayscale)
@@ -1055,7 +1096,7 @@ const scatterColor = "#F9C1B3";
 const sansSerif =
   "'Gill Sans', 'Gill Sans MT', 'Ser­avek', 'Trebuchet MS', sans-serif";
 const letterSpacing = "normal";
-const fontSize = 14;
+const fontSize = 12;
 
 // Layout
 const baseProps = {
@@ -1073,6 +1114,15 @@ const baseLabelStyles = {
   padding: 10,
   fill: charcoal,
   stroke: "transparent"
+};
+const tiltbaseLabelStyles = {
+  fontFamily: sansSerif,
+  fontSize,
+  letterSpacing,
+  padding: 10,
+  fill: charcoal,
+  stroke: "transparent",
+  angle:45,
 };
 const centeredLabelStyles = Object.assign({ textAnchor: "middle" }, baseLabelStyles);
 
@@ -1112,11 +1162,18 @@ const theme = {
           pointerEvents: "visible"
         },
         ticks: {
-          fill: "transparent",
-          size: 1,
-          stroke: "transparent"
+
+          size:(tick) => {
+            const tickSize =
+              tick % 3 === 0 ? 6: 3;
+            return tickSize;
+          },
+          stroke: "black"
         },
-        tickLabels: baseLabelStyles
+
+
+
+        tickLabels: tiltbaseLabelStyles
       }
     },
     baseProps
