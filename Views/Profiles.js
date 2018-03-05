@@ -44,6 +44,8 @@ this.store=""
 
 
 
+
+
   _saver = async() =>{
 
     this.setState({
@@ -74,7 +76,7 @@ _loader = async() =>{
     console.log(this.store)
     this.store = JSON.parse(this.store)
               if(!this.store){
-                Alert.alert('database is empty')
+                Alert.alert('database has been reset')
                 this.store ={
 
                         surname:{
@@ -439,6 +441,29 @@ this._loader().done()
                           </ScrollView>
                           <View  style={{marginBottom:0}}>
 
+                          <TouchableOpacity  onPress={()=>{
+
+                                Alert.alert(
+                                'Reset',
+                                'Are you sure you want to reset database?',
+                                [
+                                  {text: 'No', },
+                                 {text: 'Yes', onPress: () =>{
+                                     AsyncStorage.removeItem('store').then(this._loader().done())
+
+                                 } },
+                                ],
+                                { cancelable: false }
+                              )
+
+
+
+                          }}
+
+                            style={{backgroundColor:'transparent'}}>
+                              <Text style={{color:"red"}}>Rest</Text>
+                          </TouchableOpacity>
+
 
                           <TouchableOpacity  onPress={()=>{
 
@@ -487,6 +512,7 @@ this._loader().done()
                                <FontAwesome style={{fontSize: 30,color:'#ddd'}}>{Icons.userPlus}</FontAwesome>
                                  </View>
                           </TouchableOpacity>
+
 
 
 
