@@ -601,9 +601,11 @@ this.refs.scrollView1.scrollToEnd({animated: true})
       Graph =
 
    <View pointerEvents='box-none' style={{
+
      flex:1,
      alignItems: 'center',
-      justifyContent: 'center',}}>
+      justifyContent: 'center',
+  }}>
 
  <VictoryChart  width={380} height={220}
  domain={{x: [0, 24],y: [0, 10]}}
@@ -646,8 +648,8 @@ style={{
  <VictoryScatter
           size={10}
             animate={{ duration: 1000 }}
-          labels={(d) => `${d.y}ng/ml`}
-          labelComponent={<VictoryTooltip flyoutStyle={{fill: "#F9C1B3", stroke:axisColor}}/>}
+          labels={(d) => `${Math.floor(d.x)}:${("0" +((d.x-Math.floor(d.x))*60)).slice(-2)}->\n${d.y} ng/ml`}
+          labelComponent={<VictoryTooltip orientation={(d)=> d.y>7?"bottom":"top"} flyoutStyle={{fill: "#F9C1B3", stroke:axisColor}}/>}
           style={ {data: { stroke: "#F16651" }}}
         size={(datum) => {return datum.y? 8: 1 }}
           data={[

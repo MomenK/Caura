@@ -175,9 +175,10 @@ this._loader().done()
   render() {
 
     const { navigate } = this.props.navigation;
-    if (this.state.isLoading) {
+
       if(!this.state.adding)
       {
+          if (this.state.isLoading) {
         List=   Object.keys(this.store.height).map((key) => {
             return <TouchableOpacity   key={key}  onPress={()=>{
 
@@ -295,6 +296,20 @@ this._loader().done()
                       </TouchableOpacity >
                   })
       }
+      else{
+        List = <View style={{flex: 1,
+    justifyContent: 'center'}}>
+
+ <View style={{height:400, flexDirection: 'column',
+    justifyContent: 'center',
+    padding: 10}}>
+
+       <ActivityIndicator size="large" color="#F16651" />
+       <Text style={{color:'white'}}> Loading</Text>
+ </View>
+        </View>
+      } // end of loading
+    }
       else {
 
         List=   <View  style={{flex: 1}}>
@@ -526,16 +541,10 @@ this._loader().done()
     </View>
 
       );
-     }
-     else{
-       return(  <View style={{flex:1, justifyContent:'center',alignItems:'center', backgroundColor:'#F9C1B3'}}>
 
-<View>
-      <ActivityIndicator size="large" color="#F16651" />
-      <Text> Loading</Text>
-</View>
-       </View>);
-     } // end of loading
+
+
+
    } // end of render
 
  } // end of class
