@@ -1,3 +1,10 @@
+/**
+ * Caura mobile Application
+ * @MomenKamal
+
+ PROFILES.JS: The main interface for team management, allowing exploring players, adding new player and deleting existing players
+*/
+
 import React, { Component } from 'react';
 import {Picker,ActivityIndicator ,AsyncStorage,ScrollView, StatusBar,Button,Alert,Platform, View, Text,TextInput,TouchableHighlight,TouchableWithoutFeedback, TouchableOpacity,StyleSheet,Image,Dimensions } from 'react-native';
 import FontAwesome, { Icons } from "react-native-fontawesome";

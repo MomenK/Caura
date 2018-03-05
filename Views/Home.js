@@ -1,3 +1,9 @@
+/**
+ * Caura mobile Application
+ * @MomenKamal
+ CHART.JS: an example of socket communication with Heroku server. THIS IS NOT A FUNCTIONAL PART OF THE APPLICATION, IT IS GOOD FOR FUTURE DEVELOPMENT
+*/
+
 import React, { Component } from 'react';
 import { Button,Alert,Platform, View, Text,TextInput,TouchableHighlight,TouchableWithoutFeedback, StyleSheet,Image,Dimensions } from 'react-native';
 

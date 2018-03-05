@@ -1,3 +1,10 @@
+/**
+ * Caura mobile Application
+ * @MomenKamal
+
+ DONUT.JS: Library for generating interactive PIE infographic
+*/
+
 import React, { Component } from "react";
 import { Button,Alert,Platform, View, Text,TextInput,TouchableHighlight,TouchableWithoutFeedback, StyleSheet,Image,Dimensions } from 'react-native';
 
@@ -8,7 +15,7 @@ import Svg,{
     Path, G
 } from 'react-native-svg';
 
-
+//Inputs or props
 export default function Donut({
 
   height, //300

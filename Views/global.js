@@ -1,3 +1,8 @@
+/**
+ * Caura mobile Application
+ * @MomenKamal
+GLOBAL.JS: This is file contains global variables that are transfered between different pages. VERY important for functionality.
+*/
 global.signedID =  false;
 global.valueID = null;
 global.deviceNam = "June";

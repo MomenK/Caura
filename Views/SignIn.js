@@ -1,3 +1,9 @@
+/**
+ * Caura mobile Application
+ * @MomenKamal
+ SIGN IN.JS: User sign in page. THIS PAGE IS STILL NOT CONNECTED TO SERVER BACKBONE
+*/
+
 import React, { Component } from 'react';
 import { StatusBar,Button,Alert,Platform, View, Text,TextInput,TouchableHighlight,TouchableWithoutFeedback, StyleSheet,Image,Dimensions } from 'react-native';
 import FontAwesome, { Icons } from "react-native-fontawesome";

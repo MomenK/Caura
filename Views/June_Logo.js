@@ -1,3 +1,10 @@
+/**
+ * Caura mobile Application
+ * @MomenKamal
+
+ JUNE_LOGO.JS: Library for generating Caura logo. the logo is encoded in SVG instead of rendered image to enhance performance
+*/
+
 import React from 'react';
 import Svg,{
     Path, G

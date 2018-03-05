@@ -1,3 +1,13 @@
+/**
+ * Caura mobile Application
+ * @MomenKamal
+
+ APP.JS: The main page of the application consisting of navigation bars:
+      Stack Navigator: navigates between the introductionary and setting Views; such as SignIn, SignUp, Team page and add play page
+      Tab Navigator: navigators between the common views that the user mainly interact with; including teat, history,reports and ChatBot
+*/
+
+
 import React, { Component } from 'react';
 import FontAwesome, { Icons } from "react-native-fontawesome";
 
@@ -19,7 +29,7 @@ import {SensorsComponent} from './Views/Sensors.js'
 import {ChartScreen} from './Views/Chart.js'
 import {ChatBotScreen} from './Views/ChatBot.js'
 import {ExtraScreen} from './Views/Extra.js'
-import {AppViewsScreen} from './AppViews.js'
+
 
 
 import {TabBarComponent} from './wrapper.js'

@@ -1,4 +1,10 @@
-
+/**
+ * Caura mobile Application
+ * @MomenKamal
+ MAIN.JS: main application page, offering all interacting with single player profiles. The page offers:
+  - BLE connectivity (from Sensors.js)
+  - infographic display and interaction (form Extra.js and Chart.js)
+*/
 import React, { Component } from 'react';
 import { ScrollView,AsyncStorage,Button,Alert,Platform, View, Text,TextInput,TouchableHighlight,TouchableOpacity,TouchableWithoutFeedback, StyleSheet,Image,Dimensions } from 'react-native';
 import { BleManager } from 'react-native-ble-plx';

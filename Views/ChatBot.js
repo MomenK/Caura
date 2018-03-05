@@ -1,3 +1,10 @@
+/**
+ * Caura mobile Application
+ * @MomenKamal
+ CHATBOT.JS: Caura CHAT BOT
+*/
+
+
 import React, { Component } from "react";
 import {Alert,View,Text,Dimensions,Image} from 'react-native'
 import ChatBot from 'react-native-chatbot';

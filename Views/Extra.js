@@ -1,3 +1,10 @@
+/**
+ * Caura mobile Application
+ * @MomenKamal
+
+EXTRA.JS: an example of a dynamic pie charts graph. THIS IS NOT A FUNCTIONAL PART OF THE APPLICATION.
+*/
+
 import React, { Component } from "react";
 import { TouchableOpacity,ScrollView,Button,Alert,Platform, View, Text,TextInput,TouchableHighlight,TouchableWithoutFeedback, StyleSheet,Image,Dimensions } from 'react-native';
 
