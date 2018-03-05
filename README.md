@@ -1,9 +1,9 @@
 # KEYA
-CortiCare Limited React-Native Mobile Application 
+Caura: a React-Native based mobile application for rapid hormonal monitoring
 
 
 <p align="center">
-  <img alt="react-native KEYA" src="img/Logo_alpha.png" />
+  <img alt="react-native Caura" src="img/logo_orange.png" />
 </p>
 
 
