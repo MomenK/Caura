@@ -1,9 +1,9 @@
 # KEYA
-CortiCare Limited React-Native Mobile Application 
+Caura: a React-Native based mobile application for rapid hormonal monitoring
 
 
 <p align="center">
-  <img alt="react-native KEYA" src="img/Logo_alpha.png" />
+  <img alt="react-native Caura" src="img/logo_orange1.png" />
 </p>
 
 
@@ -21,6 +21,8 @@ CortiCare Limited React-Native Mobile Application
   - [react-navigation](https://reactnavigation.org/docs/intro/quick-start)
   - [react-native-fontawesome](https://github.com/entria/react-native-fontawesome)
   - [styled-components](https://www.styled-components.com/docs/basics#react-native)
+  - [react-native-modal-dropdown](https://github.com/sohobloo/react-native-modal-dropdown)
+  - [react-native-modal-datetime-picker](https://github.com/mmazzarolo/react-native-modal-datetime-picker)
   - [react-native-chatbot](https://www.npmjs.com/package/react-native-chatbot)
     - Comment 290 in react-native-chatbot/ChatBot.js needs
     - Change InputView from styled.KeyboardAvoidingView to styled.View
