@@ -11,6 +11,7 @@ Caura: a React-Native based mobile application for rapid hormonal monitoring
   - react-native-cli: 2.0.1
   - react-native: 0.50.3
   - npm: 5.6.0
+  - Android SDK Build-Tools" version 23.0.1
  
 
 ### Resources
@@ -31,6 +32,11 @@ Caura: a React-Native based mobile application for rapid hormonal monitoring
 ### Dependencies Installation
 ```Bash
 npm install
+```
+
+Add a local.properties file in [project]/android with the your sdk location, for example
+```Bash
+sdk.dir = C:/Users/Momen/AppData/Local/Android/sdk
 ```
 
 ### Running the app for Android
