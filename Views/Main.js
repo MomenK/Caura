@@ -185,13 +185,14 @@ this.win = Dimensions.get('window');
    Num = Num.toFixed(2)
    Num = parseFloat(Num)
 
-   //o =  this.ParserCon(value);
-   if(!this.testOption){
-   o=  parseFloat(this.random(80,250).toFixed(2));}
-   else {
-   o= parseFloat(global.ProfilesamplesValue[0]+ this.random(-5,5).toFixed(2));
-
-   }
+   o =  this.ParserCon(value);
+   console.log(o)
+   // if(!this.testOption){
+   // o=  parseFloat(this.random(80,250).toFixed(2));}
+   // else {
+   // o= parseFloat(global.ProfilesamplesValue[0]+ this.random(-5,5).toFixed(2));
+   //
+   // }
    this.setState({values: {...this.state.values, [key]: o}})
    Alert.alert("Test complete!")
 
@@ -939,7 +940,15 @@ var hjhj=0;
 
                       </View>
 
-
+                      <View style={{flex: 1}}>
+                      {Object.keys(this.sensors).map((key) => {
+                        return <View key={key}>
+                                <Text style={styles.title} key={"t"+key}>
+                                 {this.sensors[key] + ": " } </Text>
+                                <Text style={styles.value} key={"v"+key}> {(this.state.values[this.notifyUUID(2,key)] || "0")+" mM"}</Text>
+                                </View>
+                      })}
+                      </View>
 
                       <View style={{flex:0.45,alignItems:'center', justifyContent:"center",backgroundColor:'transparent',alignSelf:'stretch'}}>
 
@@ -948,6 +957,10 @@ var hjhj=0;
                                     {this.state.ready && <Pulse  size={20} color="#F16651" /> }
 
                               </View>
+
+
+
+
 
 
 
