@@ -1,4 +1,5 @@
 /**
+* THIS IS NOT USED !!!!!!!!!!!!!!!!
  * Caura mobile Application
  * @MomenKamal
  CHATBOT.JS: Caura CHAT BOT

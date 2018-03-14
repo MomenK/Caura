@@ -1,4 +1,5 @@
 /**
+* THIS IS NOT USED !!!!!!!!!!!!!!!!
  * Caura mobile Application
  * @MomenKamal
  CHART.JS: an example of socket communication with Heroku server. THIS IS NOT A FUNCTIONAL PART OF THE APPLICATION, IT IS GOOD FOR FUTURE DEVELOPMENT

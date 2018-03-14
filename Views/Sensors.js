@@ -1,4 +1,5 @@
 /**
+* THIS IS NOT USED !!!!!!!!!!!!!!!!
  * Caura mobile Application
  * @MomenKamal
  SENSORS.JS: an example of BLE communication. THIS IS NOT A FUNCTIONAL PART OF THE APPLICATION, IT was used for past development

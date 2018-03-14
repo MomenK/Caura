@@ -1,4 +1,6 @@
 // THIS IS TO MAKE A DYNAMIC KEYBOARD RESPONSE FOR NAVIGATION BAR
+// The navigation bar will be hidden if the keyboard is shown and it will be shown again when the keyboard is hidden
+// this function is to make the navigation bar responsive to keyboard activity
 
 
 import React from 'react'

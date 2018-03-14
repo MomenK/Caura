@@ -41,10 +41,10 @@ export class SignInScreen extends Component {
           justifyContent: 'center',}}
       source={require('../img/Background1.png')} />
 
-      <View style={{ alignItems: 'center'}}>
+      <View style={{ flex:1, alignItems: 'center'}}>
         <Text  style={styles.titl} >Sign in</Text>
 
-        <View   style={{marginTop:20,marginBottom:70}}>
+        <View   style={{flex:1, backgroundColor:"transparent", alignItems:'center', justifyContent:'center'}}>
         <June
         height="80"
         width  = "80"
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
 
   },
   button: {
-    height: 44,
+     height: 44,
      padding: 10,
      margin:30,
      marginBottom:27,
