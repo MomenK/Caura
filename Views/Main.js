@@ -216,34 +216,7 @@ this.win = Dimensions.get('window');
 }
  }
 
-  //componentWillMount() {
-
-                     ////Allows auto detection of Device with no need to press button to connect
- //   if (Platform.OS === 'ios') {
- //     this.manager.onStateChange((state) => {
- //       if (state === 'PoweredOn') this.scanAndConnect()
- //     })
- //   }
- //    else {
- //      this.scanAndConnect()
- //    }
-  //}
-
   componentDidMount(){
-
-    AsyncStorage.setItem('@MySuperStore:key', 'I like to save it.',()=>{
-    //  console.log('saved')
-      AsyncStorage.getItem('@MySuperStore:key',(err, res)=>{
-      //  console.log(res)
-       AsyncStorage.removeItem('@MySuperStore:key',()=>{
-    //     console.log('deleted')
-         AsyncStorage.getItem('@MySuperStore:key',(err,res)=> {
-  //         console.log(res)
-         });
-       });
-     });
-  });
-
 
   }
 
@@ -457,16 +430,7 @@ disconnect()
                  }
 
 
-                 // global.ProfilesamplesValue[this.testOption] = parseFloat(this.random(80,250).toFixed(2));
-                 // global.ProfilesamplesTime[this.testOption]  =   Num;
-                 // this.store.samplesTime[global.ProfileName]  =  global.ProfilesamplesTime;
-                 // this.store.samplesValue[global.ProfileName] = global.ProfilesamplesValue;
-                 // this.setState({dataTime: this.store.samplesTime[global.ProfileName],dataValue: this.store.samplesValue[global.ProfileName]})
-                 //
-                 // global.ProfilelogsTime[this.state.stage-1]=timee;
-                 // this.store.logsTime[global.ProfileName] =  global.ProfilelogsTime;
-                 // this.setState({logTime: this.store.logsTime[global.ProfileName]})
-                 // this._saver().done();
+            
 
 
                  this.setState({ready:true})
@@ -485,18 +449,7 @@ disconnect()
                this.stage =4;
                this.attention=2;
 
-              //   this.setState({attention:this.attention}); this.setState({stage:this.stage})
 
-               // global.ProfilesamplesValue[this.testOption]=parseFloat(this.random(80,250).toFixed(2));
-               // global.ProfilesamplesTime[this.testOption]=   Num;
-               // this.store.samplesTime[global.ProfileName] =  global.ProfilesamplesTime;
-               // this.store.samplesValue[global.ProfileName] = global.ProfilesamplesValue;
-               // this.setState({dataTime: this.store.samplesTime[global.ProfileName],dataValue: this.store.samplesValue[global.ProfileName]})
-               //
-               // global.ProfilelogsTime[3]=timee;
-               // this.store.logsTime[global.ProfileName] =  global.ProfilelogsTime;
-               // this.setState({logTime: this.store.logsTime[global.ProfileName]})
-               // this._saver().done();
 
                this.setState({ready:true})
                 Alert.alert("Press test button on the device")
@@ -515,20 +468,7 @@ disconnect()
                  this.stage =2;
                  this.attention=1;
 
-                   //this.setState({attention:this.attention}); this.setState({stage:this.stage})
 
-               // global.ProfilesamplesValue[this.testOption]= parseFloat(this.random(80,250).toFixed(2));
-               // global.ProfilesamplesTime[this.testOption]=  Num;
-               // this.store.samplesTime[global.ProfileName] =  global.ProfilesamplesTime;
-               // this.store.samplesValue[global.ProfileName] = global.ProfilesamplesValue;
-               // this.setState({dataTime: this.store.samplesTime[global.ProfileName],dataValue: this.store.samplesValue[global.ProfileName]})
-               //
-               // global.ProfilelogsTime[0]=timee;
-               // this.store.logsTime[global.ProfileName] =  global.ProfilelogsTime;
-               // this.setState({logTime: this.store.logsTime[global.ProfileName]})
-               // this._saver().done();
-
-            //    this.scanAndConnect()
             this.setState({ready:true})
              Alert.alert("Press test button on the device")
 
@@ -869,9 +809,7 @@ var hjhj=0;
                                               </Svg>
 
                         <ScrollView  ref="scrollView1"
-                         keyboardShouldPersistTaps='always'
-
-        >
+                         keyboardShouldPersistTaps='always'>
 
                          <View style={{flex: 1,
                          alignItems: 'center',
