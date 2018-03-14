@@ -36,10 +36,13 @@ this.store=""
    isNotLoading:true, //isnotLoading
    adding:false, // Decide if a new player is being added
 
-    text:{
+    text:{  // Temporary place holders for TextInputs components in the new player addition
       1:"",
       2:"",
       3:"",
+      4:"",
+      5:"",
+      6:"",
       },
     }
   }

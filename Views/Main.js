@@ -23,7 +23,7 @@ import Svg,{
 } from 'react-native-svg';
 
 
-//console.disableYellowBox = true;
+console.disableYellowBox = true;
 
 
 
@@ -44,40 +44,37 @@ import Donut from './Donut.js';
 
   _handleDatePicked = (date) => {
 
-  //  console.log(  date.toString().split('') )
-  // console.log(  date.toString().slice(16,21) )
+                    //  console.log(  date.toString().split('') )
+                    // console.log(  date.toString().slice(16,21) )
+
+                    global.ProfilelogsTime[this.key]=date.toString().slice(16,21); //format datetime to time (hour:min)
+
+                    this.setState({enable:true})
+
+                    this.store.logsTime[global.ProfileName] =  global.ProfilelogsTime;
 
 
+                  //  console.log("shot")
+
+                    //  console.log(global.ProfilelogsTime)
+
+                  //  console.log(this.store.logsTime[global.ProfileName])
+                  //    console.log(this.state.logTime)
 
 
-
-  global.ProfilelogsTime[this.key]=date.toString().slice(16,21);
-
-
-  this.setState({enable:true})
-
-  this.store.logsTime[global.ProfileName] =  global.ProfilelogsTime;
+                  this.setState({logTime: this.store.logsTime[global.ProfileName]})
 
 
-//  console.log("shot")
-
-  //  console.log(global.ProfilelogsTime)
-
-//  console.log(this.store.logsTime[global.ProfileName])
-//    console.log(this.state.logTime)
+                    this._saver().done();
 
 
-this.setState({logTime: this.store.logsTime[global.ProfileName]})
+                  //  console.log(this.key)
+                    Alert.alert('Time has been picked: ',date.toString().slice(16,21));
 
-
-  this._saver().done();
-
-
-//  console.log(this.key)
-  Alert.alert('Time has been picked: ',date.toString().slice(16,21));
-
-    this._hideDateTimePicker();
+                      this._hideDateTimePicker();
   };
+
+
 
   getIndex(value, arr) {
       for(var i = 0; i < arr.length; i++) {
@@ -94,27 +91,31 @@ this.setState({logTime: this.store.logsTime[global.ProfileName]})
     console.log( global.ProfilesamplesTime)
     temp = this.getIndex("",global.ProfilelogsTime)
     console.log(temp)
-    temp=temp==-1?6:temp;
-    temp1=temp==6?false:true;
+    temp=temp==-1?6:temp; //decides which logs to show
+
+    temp1=temp==6?false:true; //connect button enable
     console.log(temp)
+
     this.state = {info: "Ready...", values: {},connection: false,tryingtoCon:false,
-    mode:1,
-    type:0,
+    mode:1, //switch between activity and recovery Donuts
+    type:0, // swith between donuts and graph
+
     dataValue:  global.ProfilesamplesValue,
     dataTime:   global.ProfilesamplesTime,
     logValue:   global.ProfilelogsValue,
     logTime:    global.ProfilelogsTime,
      isDateTimePickerVisible: false,
-     stage:temp,
-     enable:temp1,
+     stage:temp,    //decides which logs to show
+     enable:temp1,  //connect button enable
      attention:6,
      connectionstage:0,
      ready:false,
   }
-this.attention=null;
-this.stage=null;
- this.testOption =0;
-this.key="empty"
+
+  this.attention=null;
+  this.stage=null;
+  this.testOption =0;
+  this.key="empty"
   this.store ={
 
           surname:{
@@ -176,6 +177,7 @@ this.win = Dimensions.get('window');
    this.setState({info: "ERROR: " + message,connection:false,ready:false})
 
  }
+
  updateValue(key, value) {
    if(this.state.ready){
 
@@ -187,12 +189,12 @@ this.win = Dimensions.get('window');
 
    o =  this.ParserCon(value);
    console.log(o)
-   // if(!this.testOption){
-   // o=  parseFloat(this.random(80,250).toFixed(2));}
-   // else {
-   // o= parseFloat(global.ProfilesamplesValue[0]+ this.random(-5,5).toFixed(2));
-   //
-   // }
+    if(!this.testOption){
+    o=  parseFloat(this.random(80,250).toFixed(2));}
+    else {
+    o= parseFloat(global.ProfilesamplesValue[0]+ this.random(-5,5).toFixed(2));
+
+   }
    this.setState({values: {...this.state.values, [key]: o}})
    Alert.alert("Test complete!")
 
@@ -362,7 +364,7 @@ disconnect()
     this.info("Ready..")
   }
 
- ParserCon(raw)
+ ParserCon(raw)  //conerts base64 to string
   {
     value = raw.slice(0,8); //4 depends on the length of notification from BLE
     //  this.info(value+"..")
