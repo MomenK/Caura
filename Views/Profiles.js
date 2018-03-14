@@ -29,10 +29,12 @@ export class ProfilesScreen extends Component {
 
 this.store=""
 
+
+
   this.state =   {
 
-   isLoading:true,
-   adding:false,
+   isNotLoading:true, //isnotLoading
+   adding:false, // Decide if a new player is being added
 
     text:{
       1:"",
@@ -49,7 +51,7 @@ this.store=""
   _saver = async() =>{
 
     this.setState({
-     isLoading: false
+     isNotLoading: false
     })
 
     try {
@@ -67,7 +69,7 @@ this.store=""
 
 _loader = async() =>{
   this.setState({
-   isLoading: false
+   isNotLoading: false
   })
 
 
@@ -75,10 +77,9 @@ _loader = async() =>{
     this.store = await  AsyncStorage.getItem('store');
     console.log(this.store)
     this.store = JSON.parse(this.store)
-              if(!this.store){
+              if(!this.store){ // In case store is empty - only on first time initialization or when "reset" is evoked
                 Alert.alert('database has been reset')
                 this.store ={
-
                         surname:{
                           "Fosca":"Mirata",
                           "Muru":"Muthu",
@@ -136,7 +137,7 @@ _loader = async() =>{
 
                         },
                         logsTime:{
-                          "Fosca":["8:52","9:00","10:00","10:15","14:30","18:00"],
+                          "Fosca":["8:52","  :00","10:00","10:15","14:30","18:00"],
                           "Momen":["8:55","9:00","10:00","10:12","14:30","18:00"],
                           "Muru":["8:59","9:00","10:00","10:05","14:30","18:00"],
                           "Alistar":["9:00","9:00","10:00","10:10","14:30","18:00"],
@@ -155,7 +156,7 @@ _loader = async() =>{
                 //    }
               }
    this.setState({
-    isLoading: true
+    isNotLoading: true
    })
 
   }
@@ -178,9 +179,9 @@ this._loader().done()
 
       if(!this.state.adding)
       {
-          if (this.state.isLoading) {
+          if (this.state.isNotLoading) { // This page shows all players profiles
         List=   Object.keys(this.store.height).map((key) => {
-            return <TouchableOpacity   key={key}  onPress={()=>{
+            return <TouchableOpacity   key={key}  onPress={()=>{ //Sending the specfic user data to Main page
 
                       global.ProfileName=[key]
                       global.ProfileSurname=this.store.surname[key]
@@ -296,7 +297,7 @@ this._loader().done()
                       </TouchableOpacity >
                   })
       }
-      else{
+      else{  // This is the loading screen !
         List = <View style={{flex: 1,
     justifyContent: 'center'}}>
 
@@ -310,7 +311,7 @@ this._loader().done()
         </View>
       } // end of loading
     }
-      else {
+      else { // This is the page for adding new player
 
         List=   <View  style={{flex: 1}}>
             <View  style={{flex: 1, flexDirection: 'column', justifyContent: 'center'}}>
@@ -391,6 +392,7 @@ this._loader().done()
               </View>
 
       }
+
     return (
 
       <View style={styles.container}>
@@ -452,8 +454,9 @@ this._loader().done()
                           </View>
 
                           </ScrollView>
-                          <View  style={{marginBottom:0}}>
 
+                          <View  style={{marginBottom:0}}>
+                          {/* This is a reset button to restore the database to its intial stage - with prefilled data */}
                           <TouchableOpacity  onPress={()=>{
 
                                 Alert.alert(

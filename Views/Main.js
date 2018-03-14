@@ -23,7 +23,7 @@ import Svg,{
 } from 'react-native-svg';
 
 
-console.disableYellowBox = true;
+//console.disableYellowBox = true;
 
 
 
