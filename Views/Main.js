@@ -105,13 +105,13 @@ import Donut from './Donut.js';
     logValue:   global.ProfilelogsValue,
     logTime:    global.ProfilelogsTime,
      isDateTimePickerVisible: false,
-     stage:temp,    //decides which logs to show
-     enable:temp1,  //connect button enable
+     stage:temp,    //progress in the code, reflected by the logs - new user, stage = 0. pretraining is stage 2, post training is stage 4 and first recovery id stage 5, second recovery stage 6
+     enable:temp1,  //connect button enable-> whether you can connect your device or not
      attention:6,
-     connectionstage:0,
-     ready:false,
+     ready:false, //only true after the device is connected and test type selected
   }
 
+// this are transient variables. The are used to update the state variables (this.stage updates this.state.stage)
   this.attention=null;
   this.stage=null;
   this.testOption =0;
@@ -152,9 +152,6 @@ import Donut from './Donut.js';
     }
     this.address=null;
 
-this.win = Dimensions.get('window');
-
-
   }
 
   serviceUUID(num) {
@@ -178,16 +175,17 @@ this.win = Dimensions.get('window');
 
  }
 
+// Important! function that recieves the input from the device
  updateValue(key, value) {
-   if(this.state.ready){
+   if(this.state.ready){// ready has been defined
 
-   timee= new Date().toString().slice(16,21);
-   momen = timee.split(':')
-   var Num = parseInt(momen[0] ,10) + parseInt(momen[1] ,10)/60
+   timee= new Date().toString().slice(16,21); // extracts hours and minutes only
+   buff = timee.split(':')
+   var Num = parseInt(buff[0] ,10) + parseInt(buff[1] ,10)/60
    Num = Num.toFixed(2)
    Num = parseFloat(Num)
 
-   o =  this.ParserCon(value);
+   o =  this.ParserCon(value); // o is the processed input from the device
    console.log(o)
     if(!this.testOption){
     o=  parseFloat(this.random(80,250).toFixed(2));}
@@ -337,7 +335,7 @@ disconnect()
     this.info("Ready..")
   }
 
- ParserCon(raw)  //conerts base64 to string
+ ParserCon(raw)  //converts base64 to string (BLE device sends data in base64)
   {
     value = raw.slice(0,8); //4 depends on the length of notification from BLE
     //  this.info(value+"..")
@@ -401,8 +399,8 @@ disconnect()
            else{
 
            timee= new Date().toString().slice(16,21);
-           momen = timee.split(':')
-          var Num = parseInt(momen[0] ,10) + parseInt(momen[1] ,10)/60
+           buff = timee.split(':')
+          var Num = parseInt(buff[0] ,10) + parseInt(buff[1] ,10)/60
            Num = Num.toFixed(2)
            Num = parseFloat(Num)
            console.log(Num)
@@ -430,7 +428,7 @@ disconnect()
                  }
 
 
-            
+
 
 
                  this.setState({ready:true})
@@ -636,7 +634,7 @@ style={{
 
     }
 
-var hjhj=0;
+var buffer2=0;
       return (
 
 
@@ -818,7 +816,7 @@ var hjhj=0;
 
 
                            {Object.keys(this.state.logTime).map((key) => {
-                             hjhj =key+1
+                             buffer2 =key+1
                              if(key<this.state.stage)
                         return (
                         <View   key={"V1"+key}
@@ -865,7 +863,7 @@ var hjhj=0;
 
                                 <View  key={"V2"}
                                 style={{flex:1,  alignItems: 'center',   justifyContent: 'center'  }}>
-                                <FontAwesome  key={hjhj} style={{fontSize:this.state.enable?40:30, color:this.state.enable?"#F16651":'#F9C1B3'}}>{Icons.circle}</FontAwesome>
+                                <FontAwesome  key={buffer2} style={{fontSize:this.state.enable?40:30, color:this.state.enable?"#F16651":'#F9C1B3'}}>{Icons.circle}</FontAwesome>
                                 </View>
 
                                 <View  key={"V3"} style={{flex:6,  alignItems: 'flex-start',   justifyContent: 'space-around'  }}>
